@@ -9,10 +9,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default function Login() {
   const navigation = useNavigation();
 
+  const fakePassword = 'password';
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = () => {    
+      navigation.navigate('Home');
   };
 
   return (
@@ -21,7 +23,7 @@ export default function Login() {
         colors={['#c7f9cc', '#A7C4E4']}
         style={styles.background}
       />
-      <Image style={styles.logo} source={require('../../assets/logo.png')} />
+      <Image style={styles.logo} source={require('../../assets/logo.png')} /> 
 
       <View style={styles.modale}>
         <Text style={styles.title}>Connexion</Text>
@@ -40,10 +42,10 @@ export default function Login() {
           <Text style={styles.forgetPassword}>Mot de passe oublié ?</Text>
         </TouchableOpacity>
         <View style={styles.buttons}>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <TouchableOpacity style={styles.logupButton} onPress={() => navigation.navigate('Register')}>
             <Text style={styles.login}>Vous n'avez pas de compte ? Pêchez-en un !</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <TouchableOpacity style={styles.connectButton} onPress={handleLogin}>
             <Text>Se connecter</Text>
           </TouchableOpacity>
         </View>
@@ -77,18 +79,6 @@ const styles = StyleSheet.create({
     top: 0,
     height: '100%',
   },
-  buttons: {
-    marginTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-  },
-  button: {
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: '#f0f0f0',
-    width: '100%',
-  },
   logo: {
     width: '50%',
     height: '30%',
@@ -97,16 +87,29 @@ const styles = StyleSheet.create({
   forgetPasswordContainer: {
     marginTop: -20,
     marginBottom: 20,    
-    marginLeft: -110,
+    marginLeft: -123,
   },
   forgetPassword: {
     textDecorationLine: 'underline',
     fontWeight: '500',
+    fontSize: 12,
+  },
+  buttons: {
+    marginTop: 10,
+    flexDirection: 'row',
+    width: '92%',
+  },
+  logupButton: {
+    width: '70%',
   },
   login: {
-    paddingLeft: 50,
-    textDecorationLine: 'underline',
     fontWeight: '500',
-    width: '60%',
+    textDecorationLine: 'underline',
+  },
+  connectButton: {
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: '#f0f0f0',
+    marginTop: 15,
   },
 });

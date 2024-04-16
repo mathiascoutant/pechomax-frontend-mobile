@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from '../screens/Login';
 import Register from '../screens/Register';
+import Home from '../screens/Home';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,14 @@ const Navigation = () => {
           component={Register}
           options={{
              title: 'Register',
+             headerShown: false,
+            }}
+          />
+          <Stack.Screen 
+          name="Home" 
+          component={Home}
+          options={{
+             title: 'Home',
              headerShown: false,
             }}
           />

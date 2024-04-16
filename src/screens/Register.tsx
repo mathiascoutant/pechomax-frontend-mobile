@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { Input } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-
+import axios from 'axios';
 
 export default function Register() {
   const navigation = useNavigation();
@@ -13,12 +13,27 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
+    try {
+      console.log('username', username);
+      console.log('email', email);
+      console.log('password', password);
+      
+      const response = await axios.post('http://localhost:3000/users/auth/register', JSON.stringify({
+        username,
+        email,
+        password
+      }), {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      console.log(response.data);
+      navigation.navigate('Home');
+    } catch (error) {      
+      console.error(error);
+    }
   };
-
-//   useEffect(() => {
-//     console.log(username, email, password);
-//   }, [username, email, password]);
     
 
   return (
@@ -48,10 +63,10 @@ export default function Register() {
           secureTextEntry
         />
         <View style={styles.buttons}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-            <Text>Se connecter</Text>
+          <TouchableOpacity style={styles.connectButton} onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.connectText}>Vous avez déjà un compte ? Ferrez-le !</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleRegister}>
+          <TouchableOpacity style={styles.logupButton} onPress={handleRegister}>
             <Text>S'inscrire</Text>
           </TouchableOpacity>
         </View>
@@ -86,15 +101,20 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   buttons: {
-    marginTop: 10,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
+    width: '94%',
   },
-  button: {
+  logupButton: {
     padding: 10,
     borderRadius: 10,
     backgroundColor: '#f0f0f0',
+  },
+  connectButton: {
+    width: '85%',
+  },
+  connectText: {
+    fontWeight: '500',
+    textDecorationLine: 'underline',
   },
   logo: {
     width: '50%',
