@@ -1,49 +1,40 @@
-import React, { useRef } from 'react';
-import { View, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
+import RNActionButton from 'react-native-action-button-warnings-fixed';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import AntDesignIcons from 'react-native-vector-icons/AntDesign';
-// import { useSharedValue } from 'react-native-reanimated';
+import { faFish, faWater } from '@fortawesome/free-solid-svg-icons';
 
-export const AddButton = () => {
- 
-  const DURATION = 400;
-  const STRANSLATE_Y = -80;
-  const isOpened = useRef(false);
-//   const transYCamera = useSharedValue(0);
-
-  function handlePress() {
-    if (isOpened.current) {
-
-    } else {
-
-    }
-    isOpened.current = !isOpened.current;
-    console.log(isOpened.current);
+class AddButton extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <RNActionButton buttonColor="rgba(231,76,60,1)">
+          <RNActionButton.Item style={styles.firstAction} buttonColor='#c7f9cc' title="Nouvelle prise" onPress={() => console.log("Belle prise bogoss")}>
+            <FontAwesomeIcon icon={faFish} size={25}/>
+          </RNActionButton.Item>
+          <RNActionButton.Item buttonColor='#A7C4E4' title="Nouveau coin de pêche" onPress={() => console.log("Beau lac bogoss")}>
+            <FontAwesomeIcon icon={faWater} size={25}/>
+          </RNActionButton.Item>
+        </RNActionButton>
+      </View>
+    );
   }
-
-  return (
-    <View style={styles.container}>      
-        <Pressable 
-            onPress={handlePress}
-            style={({pressed}) => pressed ? [styles.plusButton, {transform: [{scale: 0.9}]}] : styles.plusButton}>
-            <AntDesignIcons name="plus" size={36} color="white" />
-        </Pressable>
-    </View>
-  );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
     position: 'absolute',
-    bottom: 50,
-    right: 30,
-    },
-  plusButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center',
-},
+  },
+  container: {
+    bottom: '13%',
+  },
+  firstAction: {
+    position: 'absolute',
+    right: 100,
+  }
 });
+
+export default AddButton;

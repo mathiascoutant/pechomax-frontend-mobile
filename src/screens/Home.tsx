@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/Navigation';
+import AddButton from '../components/AddButton';
+import { getSelf } from '../hooks/users/getSelf';
 
 export default function Home() {
-  const navigation = useNavigation();
+  type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-
-  const handleRegister = () => {
-  };
-    
+  const navigation = useNavigation<RegisterScreenNavigationProp>();    
 
   return (
     <View>
         <ScrollView contentContainerStyle={styles.globalAuth}>
             <Image style={styles.logo} source={require('../../assets/logo.png')} />
+            <TouchableOpacity onPress={() => getSelf()}> 
+              <Text>BOUTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOON TO LOGIN</Text>
+            </TouchableOpacity>
             <Text>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sagittis pulvinar odio, at ultrices arcu. In hac habitasse platea dictumst. Integer congue sapien in libero sodales, elementum pulvinar tellus tempus. Nullam ullamcorper nec arcu id condimentum. Morbi at nisi sapien. Vestibulum pharetra congue erat, et cursus ligula vestibulum sit amet. Mauris vel enim elit. Praesent vel consectetur odio. Fusce suscipit viverra lectus, gravida congue metus sollicitudin vel. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat magna nec est vehicula laoreet. Pellentesque suscipit tincidunt cursus. Vestibulum condimentum consequat congue. Nulla consequat mauris nec sapien volutpat, pulvinar rutrum nulla consequat.
 
@@ -51,6 +55,7 @@ Sed lacus tortor, vestibulum et nunc nec, varius tincidunt risus. Sed maximus ni
             </Text>
         
         </ScrollView>
+        <AddButton />
     </View>
   );
 }

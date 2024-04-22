@@ -4,18 +4,38 @@ import { Input } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/Navigation';
+import axios from 'axios';
 
 
 export default function Login() {
-  const navigation = useNavigation();
+  type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+  
+  const navigation = useNavigation<RegisterScreenNavigationProp>();
 
-  const fakePassword = 'password';
-  const [username, setUsername] = useState('');
+  const [credential, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {    
+  const handleLogin = async () => {    
+    try {
+      console.log('credential', credential);
+      console.log('password', password);
+
+      const response = await axios.post('https://pechomax-backend.mrt-juillardfo.workers.dev/auth/login', JSON.stringify({
+        credential,
+        password
+      }), {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      console.log(response.data);
+      console.log('User logged in');
       navigation.navigate('Home');
-  };
+    } catch (error) {    
+      console.error(error);      
+    }  };
 
   return (
     <View style={styles.globalAuth}>
@@ -29,7 +49,7 @@ export default function Login() {
         <Text style={styles.title}>Connexion</Text>
         <Input
           placeholder="Nom d'utilisateur / Email"
-          value={username}
+          value={credential}
           onChangeText={setUsername}
         />
         <Input

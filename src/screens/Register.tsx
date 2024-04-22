@@ -5,21 +5,31 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import axios from 'axios';
+import { RootStackParamList } from '../navigation/Navigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export default function Register() {
-  const navigation = useNavigation();
+  type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+  
+  const navigation = useNavigation<RegisterScreenNavigationProp>();
+
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
 
   const handleRegister = async () => {
     try {
       console.log('username', username);
       console.log('email', email);
       console.log('password', password);
-      
-      const response = await axios.post('http://localhost:3000/users/auth/register', JSON.stringify({
+      if (username.includes('@')) {
+        alert('Le nom d\'utilisateur ne doit pas contenir de @');
+        return;
+      }
+
+      const response = await axios.post('https://pechomax-backend.mrt-juillardfo.workers.dev/auth/register', JSON.stringify({
         username,
         email,
         password
@@ -29,6 +39,7 @@ export default function Register() {
         },
       });
       console.log(response.data);
+      console.log('User registered');
       navigation.navigate('Home');
     } catch (error) {      
       console.error(error);

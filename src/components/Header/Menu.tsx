@@ -1,16 +1,35 @@
 import React from 'react';
-import { View, TouchableOpacity, Image, StyleSheet, SafeAreaView, Text, Linking } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet, Text, Linking } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
-import { faFish, faHome, faPerson, faSignOut, faUser, faWarning, faWater, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faFish, faHome, faSignOut, faUser, faWarning, faWater, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { faWikipediaW } from '@fortawesome/free-brands-svg-icons';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../navigation/Navigation';
+import axios from 'axios';
 
 
 export const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const toggleMenu = () => {
         setMenu(!menu); 
       };
+      
+  type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+  const navigation = useNavigation<RegisterScreenNavigationProp>();
+
+  const handleLogOut = async () => {
+    try {
+      const response = await axios.get('https://pechomax-backend.mrt-juillardfo.workers.dev/auth/logout');
+      console.log(response.data);
+      console.log('User logged out');
+      navigation.navigate('Home');
+    } catch (error) {      
+      console.error(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -37,27 +56,27 @@ export const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch
             </View>
         </View>
         <View style={styles.categories}>
-            <TouchableOpacity style={styles.category}>
+            <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('Home')}>
                 <FontAwesomeIcon icon={faHome} size={25}/>
                 <Text style={styles.titleCategory}>Accueil</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category}>
+            <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('Home')}>
                 <FontAwesomeIcon icon={faUser} size={25}/>
                 <Text style={styles.titleCategory}>Profil</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category}>
+            <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('Home')}>
                 <FontAwesomeIcon icon={faWater} size={25}/>
                 <Text style={styles.titleCategory}>Où pêcher ?</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category}>
+            <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('Home')}>
                 <FontAwesomeIcon icon={faWikipediaW} size={25}/>
                 <Text style={styles.titleCategory}>Wiki</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category}>
+            <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('Home')}>
                 <FontAwesomeIcon icon={faBars} size={25}/>
                 <Text style={styles.titleCategory}>Forums</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category}>
+            <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('Home')}>
                 <FontAwesomeIcon icon={faFish} size={25}/>
                 <Text style={styles.titleCategory}>Mes prises</Text>
             </TouchableOpacity>
@@ -68,10 +87,12 @@ export const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch
                 <Text style={styles.contactText}>Contacter le support</Text>
             </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.logOut}>
-            <Text style={styles.logOutText}>Quitter le spot</Text>
-            <FontAwesomeIcon style={styles.logOutText} icon={faSignOut} size={25}/>
-        </TouchableOpacity>
+        <View style={styles.logOut}>
+            <TouchableOpacity style={styles.logOutContainer} onPress={() => handleLogOut()}>
+              <Text style={styles.logOutText}>Quitter le spot</Text>
+              <FontAwesomeIcon style={styles.logOutText} icon={faSignOut} size={25}/>
+            </TouchableOpacity>
+        </View>
     </View>
 
   );
@@ -79,7 +100,7 @@ export const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     width: '80%',
     height: '100%',
     top: 0,
@@ -164,9 +185,13 @@ const styles = StyleSheet.create({
     paddingTop: '22%',
     borderTopWidth: 1,
     height: '10%',
-    gap: 10,
     alignItems: 'center',
   }, 
+  logOutContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
   logOutText: {
     color: 'red',
     fontWeight: 'bold',

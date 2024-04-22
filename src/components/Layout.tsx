@@ -1,11 +1,10 @@
 import React, { useEffect, ReactNode } from "react";
 import { View, StyleSheet } from "react-native";
-import { Header } from "./Header";
-import { Menu } from "./Menu";
-import { AddButton } from "./AddButton";
+import { Header } from "./Header/Header";
+import { Menu } from "./Header/Menu";
+import AddButton from "./AddButton";
 
-
-export const Layout = ({ children }: { children: ReactNode }) => {
+export const Layout = () => {
     const [menu, setMenu] = React.useState(false);
 
     useEffect(() => {
@@ -14,20 +13,20 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
     return (
         <View style={styles.container}>
-            <Header menu={menu} setMenu={setMenu} />
-                {menu && <Menu menu={menu} setMenu={setMenu} />}
-                {children}
+            <View style={styles.contentContainer}>
+                {/* {children} */}
+            </View>
             <AddButton />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    // position: 'relative',
-    top: 0,
-    height: '100%',
-    backgroundColor: 'red',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: 'red',
+    },
+    contentContainer: {
+        flex: 1,
+    },
 });
