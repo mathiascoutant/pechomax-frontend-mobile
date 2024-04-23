@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 import Home from '../screens/Home';
+import Profile from '../screens/Profile';
+import EditProfile from '../screens/EditProfile';
+
 import { Header } from "../components/Header/Header";
 import { HeaderContainer } from '../components/Header/HeaderContainer';
 
@@ -15,6 +18,8 @@ export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   Home: undefined;
+  Profile: undefined;
+  EditProfile: undefined;
 };
 
 const Navigation = () => {
@@ -48,6 +53,22 @@ const Navigation = () => {
           component={Home}
           options={{
             title: 'Home',
+            header: () => <HeaderContainer />,
+          }}
+        />
+        <Stack.Screen 
+          name="Profile" 
+          component={Profile}
+          options={{
+            title: 'Profile',
+            header: () => <HeaderContainer />,
+          }}
+        />
+        <Stack.Screen 
+          name="EditProfile" 
+          component={EditProfile}
+          options={{
+            title: 'EditProfile',
             header: () => <HeaderContainer />,
           }}
         />

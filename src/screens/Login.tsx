@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Linking } from 'react-native';
 import { Input } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -8,57 +8,67 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/Navigation';
 import axios from 'axios';
 
-
 export default function Login() {
   type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
-  
+
   const navigation = useNavigation<RegisterScreenNavigationProp>();
 
-  const [credential, setUsername] = useState('');
+  const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState(false); 
 
-  const handleLogin = async () => {    
+  const handleLogin = async () => {
     try {
-      console.log('credential', credential);
-      console.log('password', password);
+      const response = await axios.post(
+        'https://pechomax-backend.mrt-juillardfo.workers.dev/auth/login',
+        JSON.stringify({
+          credential,
+          password,
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-      const response = await axios.post('https://pechomax-backend.mrt-juillardfo.workers.dev/auth/login', JSON.stringify({
-        credential,
-        password
-      }), {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
-      console.log(response.data);
-      console.log('User logged in');
-      navigation.navigate('Home');
-    } catch (error) {    
-      console.error(error);      
-    }  };
+      if (response.data) {
+        console.log('User logged in', response.data);
+        navigation.navigate('Home');
+      } else {
+        console.log('Authentication failed');
+        setLoginError(true); 
+      }
+    } catch (error) {
+      console.error(error);
+      setLoginError(true); 
+    }
+  };
 
   return (
     <View style={styles.globalAuth}>
-      <LinearGradient
-        colors={['#c7f9cc', '#A7C4E4']}
-        style={styles.background}
-      />
-      <Image style={styles.logo} source={require('../../assets/logo.png')} /> 
+      <LinearGradient colors={['#c7f9cc', '#A7C4E4']} style={styles.background} />
+      <Image style={styles.logo} source={require('../../assets/logo.png')} />
 
       <View style={styles.modale}>
         <Text style={styles.title}>Connexion</Text>
+        {loginError && (
+          <Text style={styles.errorMessage}>Nom d'utilisateur ou mot de passe incorrect</Text>
+        )}
         <Input
           placeholder="Nom d'utilisateur / Email"
           value={credential}
-          onChangeText={setUsername}
+          onChangeText={setCredential}
+          style={[styles.input, loginError && styles.inputError]}
         />
         <Input
           placeholder="Mot de passe"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
+          style={[styles.input, loginError && styles.inputError]}
         />
-        <TouchableOpacity style={styles.forgetPasswordContainer}>
+        <TouchableOpacity style={styles.forgetPasswordContainer} onPress={() => Linking.openURL('mailto:florian.mondaut@ynov.com') }>
           <Text style={styles.forgetPassword}>Mot de passe oublié ?</Text>
         </TouchableOpacity>
         <View style={styles.buttons}>
@@ -69,7 +79,7 @@ export default function Login() {
             <Text>Se connecter</Text>
           </TouchableOpacity>
         </View>
-      </View> 
+      </View>
     </View>
   );
 }
@@ -90,7 +100,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     width: '80%',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   background: {
     position: 'absolute',
@@ -106,7 +116,7 @@ const styles = StyleSheet.create({
   },
   forgetPasswordContainer: {
     marginTop: -20,
-    marginBottom: 20,    
+    marginBottom: 20,
     marginLeft: -123,
   },
   forgetPassword: {
@@ -131,5 +141,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#f0f0f0',
     marginTop: 15,
+  },
+  input: {
+    // padding: 10,
+    // marginBottom: 10,
+    width: '100%',
+  },
+  inputError: {
+    borderWidth: 1,
+    borderColor: 'red', 
+    borderRadius: 5,
+    padding: 10,
+  },
+  errorMessage: {
+    color: 'red', 
+    marginBottom: 10,
   },
 });

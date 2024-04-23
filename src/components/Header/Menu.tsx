@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, Image, StyleSheet, Text, Linking } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
@@ -9,12 +9,29 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/Navigation';
 import axios from 'axios';
-
+import { getSelf } from '../../hooks/users/getSelf';
+import { User } from '../../interfaces/User';
 
 export const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch<React.SetStateAction<boolean>> }) => {
-    const toggleMenu = () => {
-        setMenu(!menu); 
-      };
+  const [user, setUser] = useState<User | null>(null);
+
+  const toggleMenu = () => {
+      setMenu(!menu); 
+    };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await getSelf();
+        setUser(userData);
+        console.log('OUI', userData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
       
   type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -39,13 +56,13 @@ export const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch
         />
         <View style={styles.header}>
             <View style={styles.headerTop}>
-                <View style={styles.profile}>
-                    <Image style={styles.profilePicture} src={'https://picsum.photos/200/300'} />
-                    <Text style={styles.name}>Pêcheur</Text>
-                </View>
-                <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
-                    <FontAwesomeIcon icon={faXmark} size={25}/>
-                </TouchableOpacity>
+              <View style={styles.profile}>
+                <Image style={styles.profilePicture} source={{ uri: 'https://picsum.photos/200/300' }} />
+                <Text style={styles.name}>{user?.username}</Text>
+              </View>
+              <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
+                <FontAwesomeIcon icon={faXmark} size={25}/>
+              </TouchableOpacity>
             </View>
             <View style={styles.lastCatch}>
                 <Text style={{fontWeight: '600'}}>Dernière prise :</Text>
@@ -60,7 +77,7 @@ export const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch
                 <FontAwesomeIcon icon={faHome} size={25}/>
                 <Text style={styles.titleCategory}>Accueil</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('Profile')}>
                 <FontAwesomeIcon icon={faUser} size={25}/>
                 <Text style={styles.titleCategory}>Profil</Text>
             </TouchableOpacity>

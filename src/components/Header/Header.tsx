@@ -2,11 +2,18 @@ import React from 'react';
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../navigation/Navigation';
+import { useNavigation } from '@react-navigation/native';
 
 export const Header = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const toggleMenu = () => {
     setMenu(!menu); 
   };
+
+  type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+  const navigation = useNavigation<RegisterScreenNavigationProp>();
 
   return (
     <View style={styles.container}>      
@@ -16,7 +23,7 @@ export const Header = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispat
         </TouchableOpacity>
       </View>
       <View style={styles.rightContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
             <Image style={styles.logo} source={require('../../../assets/logo.png')} />        
         </TouchableOpacity>
       </View>
