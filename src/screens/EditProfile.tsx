@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, TextInput, Button, Pressable } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, TextInput, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/Navigation';
@@ -8,7 +8,7 @@ import { User } from '../interfaces/User';
 import AddButton from '../components/AddButton';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser, faEnvelope } from '@fortawesome/free-regular-svg-icons';
-import { faCity, faEnvelopeOpen, faKey, faMailBulk, faMapLocation, faMapLocationDot, faMapPin, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faCity, faMapLocation, faMapPin, faPhone } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -90,9 +90,9 @@ export default function EditProfile() {
           <FontAwesomeIcon icon={faPhone} size={25}/>
           <TextInput
             style={styles.input}
-            value={editedUser ? editedUser.phone_number || '' : ''}
+            value={editedUser ? editedUser.phoneNumber || '' : ''}
             placeholder='Téléphone'
-            onChangeText={text => setEditedUser(prevState => ({ ...prevState, phone_number: text }))}
+            onChangeText={text => setEditedUser(prevState => ({ ...prevState, phoneNumber: text }))}
           />
         </View>
         <View style={styles.infoContainer}>
@@ -117,9 +117,9 @@ export default function EditProfile() {
           <FontAwesomeIcon icon={faMapPin} size={25}/>
           <TextInput
             style={styles.input}
-            value={editedUser ? editedUser.zip_code || '' : ''}
+            value={editedUser ? editedUser.zipCode || '' : ''}
             placeholder='Code postal'
-            onChangeText={text => setEditedUser(prevState => ({ ...prevState, zip_code: text }))}
+            onChangeText={text => setEditedUser(prevState => ({ ...prevState, zipCode: text }))}
           />
         </View>
         <Pressable onPress={handleSave} style={styles.editButton}>
