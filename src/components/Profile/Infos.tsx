@@ -34,7 +34,7 @@ export default function Infos() {
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.header}>
         <Image style={styles.profilePic} source={{ uri: 'https://picsum.photos/200/300' }} />
         <View>
@@ -67,9 +67,6 @@ export default function Infos() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',

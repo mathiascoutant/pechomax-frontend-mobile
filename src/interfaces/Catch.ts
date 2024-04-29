@@ -5,7 +5,7 @@ export interface Catch {
     weight: number;
     speciesId: number;
     localisation: string | null;
-    pictures: string[] | null;
+    pictures: string | null;
     description: string | null;
     date: string;
   }

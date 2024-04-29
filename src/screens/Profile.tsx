@@ -7,7 +7,8 @@ import { getSelf } from '../hooks/users/getSelf';
 import { User } from '../interfaces/User';
 import AddButton from '../components/AddButton';
 import Infos from '../components/Profile/Infos';
-import Catches from '../components/Profile/Catches';
+import Catches from '../components/Profile/Catches/Catches';
+import Posts from '../components/Profile/Posts/Posts';
 
 export default function Profile() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -38,8 +39,11 @@ export default function Profile() {
 
   return (
     <View style={styles.container}>
-      <Infos />
-      <Catches />
+      <ScrollView>
+        <Infos />
+        <Catches />
+        <Posts />        
+      </ScrollView>
       <AddButton />
     </View>
   );
