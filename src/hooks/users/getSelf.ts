@@ -1,8 +1,8 @@
-import axios from "axios";
+import AxiosClient from '../../hooks/axios';
 
 export const getSelf = async () => {
   try {
-    const response = await axios.get('https://pechomax-backend.mrt-juillardfo.workers.dev/users/self');
+    const response = await AxiosClient.get('/users/self');
     console.log('Getself', response.data);
     return response.data;
   } catch (error) {      

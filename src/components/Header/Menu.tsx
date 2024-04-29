@@ -8,7 +8,7 @@ import { faWikipediaW } from '@fortawesome/free-brands-svg-icons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/Navigation';
-import axios from 'axios';
+import AxiosClient from '../../hooks/axios';
 import { getSelf } from '../../hooks/users/getSelf';
 import { User } from '../../interfaces/User';
 
@@ -39,7 +39,7 @@ export const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch
 
   const handleLogOut = async () => {
     try {
-      const response = await axios.get('https://pechomax-backend.mrt-juillardfo.workers.dev/auth/logout');
+      const response = await AxiosClient.get('/auth/logout');
       console.log(response.data);
       console.log('User logged out');
       navigation.navigate('Home');

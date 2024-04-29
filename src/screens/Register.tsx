@@ -4,7 +4,7 @@ import { Input } from '@rneui/themed';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import axios from 'axios';
+import AxiosClient from '../hooks/axios';
 import { RootStackParamList } from '../navigation/Navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -24,12 +24,13 @@ export default function Register() {
       console.log('username', username);
       console.log('email', email);
       console.log('password', password);
+      console.log('DOT ENV', process.env.REACT_APP_VITE_API_BASE_URL);
       if (username.includes('@')) {
         alert('Le nom d\'utilisateur ne doit pas contenir de @');
         return;
       }
 
-      const response = await axios.post('https://pechomax-backend.mrt-juillardfo.workers.dev/auth/register', JSON.stringify({
+      const response = await AxiosClient.post('/auth/register', JSON.stringify({
         username,
         email,
         password

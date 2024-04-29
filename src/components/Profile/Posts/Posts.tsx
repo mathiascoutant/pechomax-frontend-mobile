@@ -1,34 +1,28 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { catches } from '../../../data/catchesData';
-import Carousel from 'react-native-reanimated-carousel';
-import CatchCard from '../Catches/CardCatches';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Conversation } from '../../../interfaces/Conversation'; 
+import fakeConversations from '../../../data/conversationsData'; 
 
 export default function Posts() {
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const PAGE_WIDTH = Dimensions.get('window').width;
-
-  const handleSnapToItem = (index: number) => {
-    setCurrentIndex(index);
-  };
-
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.title}>Mes posts</Text>            
-        <Carousel
-          loop={true}
-          height={170}
-          width={PAGE_WIDTH}
-          data={catches}
-          renderItem={({ item, index }) => (
-            <CatchCard catchData={item} index={index} totalCatches={catches.length} />
-          )}
-          scrollAnimationDuration={1000}
-          onSnapToItem={handleSnapToItem}
-        />
+    <View>
+      <Text style={styles.title}>Mes posts</Text>            
+      <View style={styles.container}>
+        <View style={styles.tableContainer}>
+          <View style={styles.tableHeader}>
+            <Text style={styles.headerText}>Titre</Text>
+            <Text style={styles.headerText}>Catégorie</Text>
+            <Text style={styles.headerText}>Date de création</Text>
+          </View>
+          {fakeConversations.map((conversation: Conversation, index: number) => (
+            <View key={index} style={styles.tableRow}>
+              <Text style={styles.rowText}>{conversation.title}</Text>
+              <Text style={styles.rowText}>{conversation.categoryId}</Text>
+              <Text style={styles.rowText}>{conversation.createdAt}</Text>
+            </View>
+          ))}
+        </View>
       </View>
     </View>
   );
@@ -36,7 +30,7 @@ export default function Posts() {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    paddingHorizontal: '2%',
   },
   title: {
     fontSize: 20,
@@ -44,5 +38,33 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingTop: '5%',
     paddingLeft: '3%',
+  },
+  tableContainer: {
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    backgroundColor: '#f0f0f0',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+  },
+  headerText: {
+    fontWeight: 'bold',
+    flex: 1,
+    textAlign: 'center',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+  },
+  rowText: {
+    flex: 1,
+    textAlign: 'center',
   },
 });

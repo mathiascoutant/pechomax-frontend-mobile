@@ -9,8 +9,8 @@ import AddButton from '../components/AddButton';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faCity, faMapLocation, faMapPin, faPhone } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
+import AxiosClient from '../hooks/axios';
 
 export default function EditProfile() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -44,19 +44,16 @@ export default function EditProfile() {
           return;
         }
 
-        const response = await axios.put(`https://pechomax-backend.mrt-juillardfo.workers.dev/users/update/self`,
+        const response = await AxiosClient.put('/users/update/self',
           newUser
-          , {
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          });
+          ,);
         console.log('*************', response.data);
         console.log('Saving edited user data:', newUser);
         navigation.navigate('Profile');
     } catch (error) {
-        console.error(error);
-        }
+        // @ts-ignore
+        console.error(error.response.data);        
+      }
   };
 
   return (

@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/Navigation';
-import axios from 'axios';
+import AxiosClient from '../hooks/axios';
 
 export default function Login() {
   type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -19,8 +19,9 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(
-        'https://pechomax-backend.mrt-juillardfo.workers.dev/auth/login',
+      console.log('DOT ENV', process.env.REACT_APP_VITE_API_BASE_URL);
+      const response = await AxiosClient.post(
+        '/auth/login',
         JSON.stringify({
           credential,
           password,
@@ -30,7 +31,7 @@ export default function Login() {
             'Content-Type': 'application/json',
           },
         }
-      );
+      );      
 
       if (response.data) {
         console.log('User logged in', response.data);
@@ -40,7 +41,8 @@ export default function Login() {
         setLoginError(true); 
       }
     } catch (error) {
-      console.error(error);
+      // @ts-ignore
+      console.error(error.response.data);
       setLoginError(true); 
     }
   };

@@ -1,0 +1,86 @@
+import { Conversation } from "../interfaces/Conversation";
+
+const fakeConversations: Conversation[] = [
+    {
+      id: '1',
+      userId: 'user123',
+      title: 'Conseils pour attraper des poissons en eau douce',
+      categoryId: 'eau_douce',
+      createdAt: '2024-04-28',
+      updatedAt: '2024-04-29',
+    },
+    {
+      id: '2',
+      userId: 'user456',
+      title: 'Expérience de pêche en mer Méditerranée',
+      categoryId: 'mer',
+      createdAt: '2024-04-27',
+      updatedAt: '2024-04-28',
+    },
+    {
+      id: '3',
+      userId: 'user789',
+      title: 'Partagez vos plus grosses prises !',
+      categoryId: 'partage',
+      createdAt: '2024-04-26',
+      updatedAt: '2024-04-26',
+    },
+    {
+      id: '4',
+      userId: 'user123',
+      title: 'Techniques de pêche à la mouche',
+      categoryId: 'mouche',
+      createdAt: '2024-04-25',
+      updatedAt: '2024-04-25',
+    },
+    {
+      id: '5',
+      userId: 'user456',
+      title: 'Tournoi de pêche au brochet',
+      categoryId: 'tournoi',
+      createdAt: '2024-04-24',
+      updatedAt: '2024-04-24',
+    },
+    {
+      id: '6',
+      userId: 'user789',
+      title: 'Conseils pour la pêche de nuit',
+      categoryId: 'nuit',
+      createdAt: '2024-04-23',
+      updatedAt: '2024-04-23',
+    },
+    {
+      id: '7',
+      userId: 'user123',
+      title: 'Préparation d\'appâts maison',
+      categoryId: 'appats',
+      createdAt: '2024-04-22',
+      updatedAt: '2024-04-22',
+    },
+    {
+      id: '8',
+      userId: 'user456',
+      title: 'Voyage de pêche en Alaska',
+      categoryId: 'voyage',
+      createdAt: '2024-04-21',
+      updatedAt: '2024-04-21',
+    },
+    {
+      id: '9',
+      userId: 'user789',
+      title: 'Rencontre avec un poisson géant !',
+      categoryId: 'rencontre',
+      createdAt: '2024-04-20',
+      updatedAt: '2024-04-20',
+    },
+    {
+      id: '10',
+      userId: 'user123',
+      title: 'Techniques de pêche à la traîne',
+      categoryId: 'train',
+      createdAt: '2024-04-19',
+      updatedAt: '2024-04-19',
+    },
+  ];
+  
+  export default fakeConversations;  

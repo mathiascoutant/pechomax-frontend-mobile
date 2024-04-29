@@ -1,4 +1,6 @@
-export const catches = [
+import { Catch } from "../interfaces/Catch";
+
+export const catches: Catch[] = [
   {
     id: "1",
     userId: "user123",
