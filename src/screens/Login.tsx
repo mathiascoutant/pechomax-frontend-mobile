@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/Navigation';
 import AxiosClient from '../hooks/axios';
+import Toast from 'react-native-toast-message';
 
 export default function Login() {
   type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -19,7 +20,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      console.log('DOT ENV', process.env.REACT_APP_VITE_API_BASE_URL);
+      console.log('DOT ENV', process.env.EXPO_PUBLIC_BASE_URL);
       const response = await AxiosClient.post(
         '/auth/login',
         JSON.stringify({
@@ -34,15 +35,26 @@ export default function Login() {
       );      
 
       if (response.data) {
-        console.log('User logged in', response.data);
+        Toast.show({
+          type: 'success',
+          text1: 'Poisson connecté !',
+          text2: 'Détendez-vous, ouvrez une bière et profitez de l\'application !',
+        });
         navigation.navigate('Home');
       } else {
-        console.log('Authentication failed');
+        Toast.show({
+          type: 'error',
+          text1: 'Erreur de connexion',
+          text2: 'Nom d\'utilisateur ou mot de passe incorrect',
+        });
         setLoginError(true); 
       }
     } catch (error) {
-      // @ts-ignore
-      console.error(error.response.data);
+      Toast.show({
+        type: 'error',
+        text1: 'Erreur de connexion',
+        text2: 'Nom d\'utilisateur ou mot de passe incorrect',
+      });
       setLoginError(true); 
     }
   };

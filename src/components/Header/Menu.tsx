@@ -11,6 +11,7 @@ import { RootStackParamList } from '../../navigation/Navigation';
 import AxiosClient from '../../hooks/axios';
 import { getSelf } from '../../hooks/users/getSelf';
 import { User } from '../../interfaces/User';
+import Toast from 'react-native-toast-message';
 
 export const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -100,8 +101,14 @@ export const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch
         </View>
         <View style={styles.contact}>
             <FontAwesomeIcon icon={faWarning} size={25}/>
-            <TouchableOpacity onPress={() => Linking.openURL('mailto:florian.mondaut@ynov.com') }>
-                <Text style={styles.contactText}>Contacter le support</Text>
+            <TouchableOpacity onPress={() => {
+                Linking.openURL('mailto:florian.mondaut@ynov.com');
+                Toast.show({
+                  type: 'info',
+                  text1: 'Un problème avec l\'applications ?',
+                  text2: 'On espère que ce n\'est pas un poisson d\'avril !',
+              })}}>                
+              <Text style={styles.contactText}>Contacter le support</Text>
             </TouchableOpacity>
         </View>
         <View style={styles.logOut}>

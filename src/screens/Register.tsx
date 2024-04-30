@@ -7,6 +7,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import AxiosClient from '../hooks/axios';
 import { RootStackParamList } from '../navigation/Navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Toast from 'react-native-toast-message';
 
 export default function Register() {
   type RegisterScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -24,7 +25,7 @@ export default function Register() {
       console.log('username', username);
       console.log('email', email);
       console.log('password', password);
-      console.log('DOT ENV', process.env.REACT_APP_VITE_API_BASE_URL);
+      console.log('DOT ENV', process.env.EXPO_PUBLIC_BASE_URL);
       if (username.includes('@')) {
         alert('Le nom d\'utilisateur ne doit pas contenir de @');
         return;
@@ -39,12 +40,18 @@ export default function Register() {
           'Content-Type': 'application/json'
         },
       });
-      console.log(response.data);
-      console.log('User registered');
+      Toast.show({
+        type: 'success',
+        text1: 'Poisson créé !',
+        text2: 'Détendez-vous, ouvrez une bière et profitez de l\'application !',
+      });      
       navigation.navigate('Home');
     } catch (error) {      
-      console.error(error);
-    }
+      Toast.show({
+        type: 'error',
+        text1: 'Erreur de connexion',
+        text2: 'Nom d\'utilisateur ou adresse mail déjà utilisé',
+      });    }
   };
     
 

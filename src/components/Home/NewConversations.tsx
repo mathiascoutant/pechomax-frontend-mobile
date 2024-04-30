@@ -1,30 +1,47 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Conversation } from '../../../interfaces/Conversation'; 
-import { getMyConversations } from '../../../hooks/conversations/getMyConversations';
-import { formatDate } from '../../../hooks/utils';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { Conversation } from '../../interfaces/Conversation'; 
+import { getConversations } from '../../hooks/conversations/getConversations';
+import { formatDate } from '../../hooks/utils';
 
-export default function Posts() {
-
-  const [conversations, setConversations] = React.useState<Conversation[]>([]);
+export default function NewConversations() {
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [visibleConversations, setVisibleConversations] = useState<Conversation[]>([]);
+  const [showMore, setShowMore] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        const myConversations = await getMyConversations();
-        setConversations(myConversations);
+        const fetchedConversations = await getConversations();
+        setConversations(fetchedConversations);
+        setVisibleConversations(fetchedConversations.slice(0, 10));
+        if (fetchedConversations.length <= 10) {
+          setShowMore(false);
+        }
       } catch (error) {
         console.error('Erreur lors de la récupération des conversations :', error);
       }
     };
 
     fetchConversations();
+
+    return () => {
+      setShowMore(false);
+    };
   }, []);
 
+  const handleShowMore = () => {
+    const remainingConversations = conversations.slice(visibleConversations.length);
+    const nextBatch = remainingConversations.slice(0, 10);
+    setVisibleConversations(prevState => [...prevState, ...nextBatch]);
+    if (remainingConversations.length <= 10) {
+      setShowMore(false);
+    }
+  };
 
   return (
     <View>
-      <Text style={styles.title}>Mes posts</Text>            
+      <Text style={styles.title}>Derniers posts</Text>            
       <View style={styles.container}>
         <View style={styles.tableContainer}>
           <View style={styles.tableHeader}>
@@ -33,7 +50,7 @@ export default function Posts() {
             <Text style={styles.headerText}>Catégorie</Text>
             <Text style={styles.headerText}>Date de création</Text>
           </View>
-          {conversations.map((conversation: Conversation, index: number) => (
+          {visibleConversations.map((conversation: Conversation, index: number) => (
             <View key={index} style={styles.tableRow}>
               <Text style={styles.rowText}>{conversation.title}</Text>
               <Text style={styles.rowText}>{conversation.userId}</Text>
@@ -42,6 +59,11 @@ export default function Posts() {
             </View>
           ))}
         </View>
+        {showMore && (
+          <TouchableOpacity style={styles.seeMoreButton} onPress={handleShowMore}>
+            <Text>Voir plus</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -85,5 +107,13 @@ const styles = StyleSheet.create({
   rowText: {
     flex: 1,
     textAlign: 'center',
+  },
+  seeMoreButton: {
+    backgroundColor: '#c7f9cc',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 10,
   },
 });

@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from 'axios';
 const AxiosClient = (): AxiosInstance => {
   const axiosClient = axios.create({
     withCredentials: true,
-    baseURL: 'http://172.16.70.190',
+    baseURL: `${process.env.EXPO_PUBLIC_BASE_URL}/api`,
     headers: {
         'Content-Type': 'multipart/form-data',
       },

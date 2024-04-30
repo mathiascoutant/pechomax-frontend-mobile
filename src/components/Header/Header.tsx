@@ -16,8 +16,8 @@ export const Header = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispat
   const navigation = useNavigation<RegisterScreenNavigationProp>();
 
   return (
-    <View style={styles.container}>      
-      <View style={styles.leftContainer}>
+    <View style={[styles.container, {backgroundColor: menu ? 'black' : 'white'}, {opacity: menu ? 0.7 : 1}]}>
+    <View style={styles.leftContainer}>
         <TouchableOpacity onPress={toggleMenu} style={styles.burgerButton}>
             <FontAwesomeIcon icon={faBars} size={25}/>
         </TouchableOpacity>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: 'white',
-    height: '10%',
+    height: '100%',
   },
   leftContainer: {
     alignItems: 'flex-start',
@@ -52,12 +52,13 @@ const styles = StyleSheet.create({
   logo: {
     width: 80,
     height: 50,
-    top: 10,
+    top: 20,
   },
   burgerButton: {
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 5,
     padding: 5,
+    top: 5,
   },
 });
