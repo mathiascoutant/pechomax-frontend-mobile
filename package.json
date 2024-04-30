@@ -37,7 +37,8 @@
     "react-native-select-dropdown": "^4.0.1",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^15.1.0",
-    "react-native-toast-message": "^2.2.0"
+    "react-native-toast-message": "^2.2.0",
+    "expo-image-picker": "~14.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

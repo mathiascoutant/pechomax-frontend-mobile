@@ -20,7 +20,7 @@ export const HeaderContainer = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'red',
-    height: '10%',
+    height: '12%',
     width: '100%',
   },
   parentContainer: {

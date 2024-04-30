@@ -20,7 +20,6 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      console.log('DOT ENV', process.env.EXPO_PUBLIC_BASE_URL);
       const response = await AxiosClient.post(
         '/auth/login',
         JSON.stringify({
@@ -50,6 +49,8 @@ export default function Login() {
         setLoginError(true); 
       }
     } catch (error) {
+      // @ts-ignore
+      console.error('Erreur lors de la connexion :', error);
       Toast.show({
         type: 'error',
         text1: 'Erreur de connexion',

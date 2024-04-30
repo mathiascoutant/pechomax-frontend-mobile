@@ -16,6 +16,8 @@ export default function Infos() {
     try {
       const userData = await getSelf();
       setUser(userData);
+      console.log('photo', userData.profilePic);
+      
     } catch (error) {
       console.error(error);
     }
@@ -36,10 +38,10 @@ export default function Infos() {
   return (
     <View>
       <View style={styles.header}>
-        <Image style={styles.profilePic} source={{ uri: 'https://picsum.photos/200/300' }} />
+        <Image style={styles.profilePic} source={{ uri: user?.profilePic}} />
         <View>
           <Text style={styles.name}>{user ? user.username : 'Non défini'}</Text>
-          <Text style={styles.level}>Niveau: {user ? user.score : 'Non défini'}</Text>
+          <Text style={styles.level}>Niveau: {user ? user.level?.title : 'Non défini'}</Text>
           
           <View style={styles.infos}>
             <View style={styles.cityInfos}>
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 20,
+    paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },

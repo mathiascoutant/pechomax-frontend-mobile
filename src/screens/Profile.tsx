@@ -8,7 +8,7 @@ import { User } from '../interfaces/User';
 import AddButton from '../components/AddButton';
 import Infos from '../components/Profile/Infos';
 import Catches from '../components/Profile/Catches/Catches';
-import Posts from '../components/Profile/Posts/Posts';
+import UserConversations from '../components/Profile/Conversations/UserConversations';
 
 export default function Profile() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -42,7 +42,7 @@ export default function Profile() {
       <ScrollView>
         <Infos />
         <Catches />
-        <Posts />        
+        <UserConversations />        
       </ScrollView>
       <AddButton />
     </View>
@@ -51,6 +51,7 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#fff',
   },
 });

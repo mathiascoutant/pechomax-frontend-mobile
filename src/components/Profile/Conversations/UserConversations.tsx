@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Conversation } from '../../../interfaces/Conversation'; 
 import { getMyConversations } from '../../../hooks/conversations/getMyConversations';
 import { formatDate } from '../../../hooks/utils';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../navigation/Navigation';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Posts() {
+export default function UserConversations() {
+  type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
 
   const [conversations, setConversations] = React.useState<Conversation[]>([]);
 
@@ -34,12 +39,12 @@ export default function Posts() {
             <Text style={styles.headerText}>Date de création</Text>
           </View>
           {conversations.map((conversation: Conversation, index: number) => (
-            <View key={index} style={styles.tableRow}>
-              <Text style={styles.rowText}>{conversation.title}</Text>
-              <Text style={styles.rowText}>{conversation.userId}</Text>
-              <Text style={styles.rowText}>{conversation.categoryId}</Text>
-              <Text style={styles.rowText}>{formatDate(conversation.createdAt)}</Text>
-            </View>
+          <TouchableOpacity key={index} style={styles.tableRow} onPress={() => navigation.navigate('Conversation', {id: conversation.id})}>
+            <Text style={styles.rowText}>{conversation.title}</Text>
+            <Text style={styles.rowText}>{conversation.user.username}</Text>
+            <Text style={styles.rowText}>{conversation.category.name}</Text>
+            <Text style={styles.rowText}>{formatDate(conversation.createdAt)}</Text>
+          </TouchableOpacity>
           ))}
         </View>
       </View>

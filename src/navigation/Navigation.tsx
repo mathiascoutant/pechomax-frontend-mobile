@@ -8,6 +8,7 @@ import Register from '../screens/Register';
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import EditProfile from '../screens/EditProfile';
+import Conversation from '../screens/Conversation';
 
 import { Header } from "../components/Header/Header";
 import { HeaderContainer } from '../components/Header/HeaderContainer';
@@ -20,15 +21,10 @@ export type RootStackParamList = {
   Home: undefined;
   Profile: undefined;
   EditProfile: undefined;
+  Conversation: { id: string };
 };
 
-const Navigation = () => {
-  const [menu, setMenu] = useState(false);
-
-  useEffect(() => {
-    console.log(menu ? 'ouvert' : 'fermé');
-  }, [menu]);
-
+const Navigation = ({}) => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
@@ -69,6 +65,14 @@ const Navigation = () => {
           component={EditProfile}
           options={{
             title: 'EditProfile',
+            header: () => <HeaderContainer />,
+          }}
+        />
+        <Stack.Screen 
+          name="Conversation" 
+          component={Conversation}
+          options={{
+            title: 'Conversation',
             header: () => <HeaderContainer />,
           }}
         />

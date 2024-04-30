@@ -51,10 +51,10 @@ export const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch
 
   return (
     <View style={styles.container}>
-        <LinearGradient
+        {/* <LinearGradient
             colors={['#c7f9cc', '#A7C4E4']}
             style={styles.background}
-        />
+        /> */}
         <View style={styles.header}>
             <View style={styles.headerTop}>
               <View style={styles.profile}>
@@ -124,7 +124,7 @@ export const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
+    backgroundColor: '#A7C4E4',
     width: '80%',
     height: '100%',
     top: 0,

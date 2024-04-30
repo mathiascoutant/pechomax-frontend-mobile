@@ -22,10 +22,6 @@ export default function Register() {
 
   const handleRegister = async () => {
     try {
-      console.log('username', username);
-      console.log('email', email);
-      console.log('password', password);
-      console.log('DOT ENV', process.env.EXPO_PUBLIC_BASE_URL);
       if (username.includes('@')) {
         alert('Le nom d\'utilisateur ne doit pas contenir de @');
         return;

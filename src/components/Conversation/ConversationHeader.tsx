@@ -1,27 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import AddButton from '../components/AddButton';
 import { Conversation } from '../interfaces/Conversation';
 import { Message } from '../interfaces/Message';
 import { getConversation } from '../hooks/conversations/getConversation';
-import { getMessagesByConversationId } from '../hooks/conversations/getMessagesByConversationId';
 
-const ConversationScreen = ({ route }) => {
-    
-  const { id } = route.params; 
+const ConversationHeader = () => {
   const [conversation, setConversation] = useState<Conversation | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     const fetchConversations = async () => {
       try {
         const fetchedConversations = await getConversation(id);
-        setConversation(fetchedConversations);
-
-        const fetchedMessages = await getMessagesByConversationId(id);
-        setMessages(fetchedMessages);
+        console.log('id depuis conversation screen', id);
         
-        console.log(fetchedMessages);
+        setConversation(fetchedConversations);
+        console.log(fetchedConversations);
         
 
       } catch (error) {
@@ -35,30 +28,22 @@ const ConversationScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <View>
         {conversation && (
           <View style={styles.conversationContainer}>
             <Text style={styles.conversationTitle}>{conversation.title}</Text>
             <Text style={styles.conversationDetails}>{conversation.user.username} - {conversation.createdAt}</Text>
           </View>
         )}
+      </View>
 
-        {messages.map((message) => (
-          <View key={message.id} style={styles.messageContainer}>
-            <Text style={styles.messageContent}>{message.content}</Text>
-            <Text style={styles.messageDetails}>{message.user.username} - {message.created_at}</Text>
-          </View>
-        ))}
-      </ScrollView>
-
-      <AddButton />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // paddingTop: 200,
+    paddingTop: 200,
     flex: 1,
   },
   conversationContainer: {
@@ -88,4 +73,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ConversationScreen;
+export default ConversationHeader;

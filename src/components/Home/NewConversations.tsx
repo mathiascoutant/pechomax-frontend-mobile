@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Conversation } from '../../interfaces/Conversation'; 
 import { getConversations } from '../../hooks/conversations/getConversations';
 import { formatDate } from '../../hooks/utils';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../navigation/Navigation';
+import { useNavigation } from '@react-navigation/native';
 
 export default function NewConversations() {
+  type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [visibleConversations, setVisibleConversations] = useState<Conversation[]>([]);
   const [showMore, setShowMore] = useState<boolean>(true);
+
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
 
   useEffect(() => {
     const fetchConversations = async () => {
@@ -51,12 +58,12 @@ export default function NewConversations() {
             <Text style={styles.headerText}>Date de création</Text>
           </View>
           {visibleConversations.map((conversation: Conversation, index: number) => (
-            <View key={index} style={styles.tableRow}>
+            <TouchableOpacity key={index} style={styles.tableRow} onPress={() => navigation.navigate('Conversation', {id: conversation.id})}>
               <Text style={styles.rowText}>{conversation.title}</Text>
-              <Text style={styles.rowText}>{conversation.userId}</Text>
-              <Text style={styles.rowText}>{conversation.categoryId}</Text>
+              <Text style={styles.rowText}>{conversation.user.username}</Text>
+              <Text style={styles.rowText}>{conversation.category.name}</Text>
               <Text style={styles.rowText}>{formatDate(conversation.createdAt)}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
         {showMore && (
