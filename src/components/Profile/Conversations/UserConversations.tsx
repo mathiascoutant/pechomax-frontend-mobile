@@ -6,6 +6,7 @@ import { formatDate } from '../../../hooks/utils';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/Navigation';
 import { useNavigation } from '@react-navigation/native';
+import { BIG_TEXT_COLOR, PRIMARY_COLOR, TEXT_COLOR } from '../../../utils/colors';
 
 export default function UserConversations() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -62,33 +63,35 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingTop: '5%',
     paddingLeft: '3%',
+    color: BIG_TEXT_COLOR
   },
   tableContainer: {
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: TEXT_COLOR,
     borderRadius: 5,
     marginVertical: 10,
   },
   tableHeader: {
     flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#000',
+    borderBottomColor: TEXT_COLOR,
   },
   headerText: {
     fontWeight: 'bold',
     flex: 1,
     textAlign: 'center',
+    color: BIG_TEXT_COLOR,
   },
   tableRow: {
     flexDirection: 'row',
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#000',
+    borderBottomColor: BIG_TEXT_COLOR,
   },
   rowText: {
     flex: 1,
     textAlign: 'center',
+    color: TEXT_COLOR,
   },
 });

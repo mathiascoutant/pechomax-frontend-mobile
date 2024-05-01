@@ -9,6 +9,7 @@ import AddButton from '../components/AddButton';
 import Infos from '../components/Profile/Infos';
 import Catches from '../components/Profile/Catches/Catches';
 import UserConversations from '../components/Profile/Conversations/UserConversations';
+import { BACKGROUND_COLOR } from '../utils/colors';
 
 export default function Profile() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -52,6 +53,6 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: BACKGROUND_COLOR,
   },
 });

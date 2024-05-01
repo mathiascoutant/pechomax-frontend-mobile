@@ -4,6 +4,7 @@ import AddButton from '../components/AddButton';
 import { getSelf } from '../hooks/users/getSelf';
 import NewDiscussionModal from '../components/Modals/NewDiscussionModal';
 import NewConversations from '../components/Home/NewConversations';
+import { BACKGROUND_COLOR } from '../utils/colors';
 
 const Home: React.FC = () => {
   return (
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: BACKGROUND_COLOR,
   },
   logo: {
     // width: '50%',

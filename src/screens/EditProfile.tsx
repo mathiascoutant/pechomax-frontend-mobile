@@ -13,6 +13,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import AxiosClient from '../hooks/axios';
 import * as ImagePicker from 'expo-image-picker';
 import Toast from 'react-native-toast-message';
+import { BACKGROUND_COLOR, BIG_TEXT_COLOR, BORDER_COLOR, TEXT_COLOR } from '../utils/colors';
 
 export default function EditProfile() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -124,7 +125,7 @@ export default function EditProfile() {
         <Pressable style={styles.profilePicContainer} onPress={openImagePicker}>
           <Image style={styles.profilePic} source={{ uri: editedUser?.profilePic || user?.profilePic }} />
           <Pressable style={styles.cameraIcon}>
-            <FontAwesomeIcon icon={faCamera} size={15} color='#fff' />
+            <FontAwesomeIcon color={BIG_TEXT_COLOR} icon={faCamera} size={15} />
           </Pressable>
           <View style={styles.overlay} />
         </Pressable>
@@ -134,55 +135,60 @@ export default function EditProfile() {
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.infoContainer}>
-          <FontAwesomeIcon icon={faUser} size={25}/>
+          <FontAwesomeIcon color={TEXT_COLOR} icon={faUser} size={25}/>
           <TextInput
             style={styles.input}
             value={editedUser ? editedUser.username : ''}
             placeholder='Pseudo'
+            placeholderTextColor={TEXT_COLOR}
             onChangeText={text => setEditedUser(prevState => {
               if (prevState === null) return null;
               return { ...prevState, username: text };
             })} />
         </View>
         <View style={styles.infoContainer}>
-          <FontAwesomeIcon icon={faEnvelope} size={25}/>
+          <FontAwesomeIcon color={TEXT_COLOR} icon={faEnvelope} size={25}/>
           <TextInput
             style={styles.input}
             value={editedUser ? editedUser.email : ''}
             placeholder='Email'
+            placeholderTextColor={TEXT_COLOR}
             onChangeText={text => setEditedUser(prevState => {
               if (prevState === null) return null;
               return { ...prevState, email: text };
             })} />
         </View>
         <View style={styles.infoContainer}>
-          <FontAwesomeIcon icon={faPhone} size={25}/>
+          <FontAwesomeIcon color={TEXT_COLOR} icon={faPhone} size={25}/>
           <TextInput
             style={styles.input}
             value={editedUser ? editedUser.phoneNumber || '' : ''}
             placeholder='Téléphone'
+            placeholderTextColor={TEXT_COLOR}
             onChangeText={text => setEditedUser(prevState => {
               if (prevState === null) return null;
               return { ...prevState, phoneNumber: text };
             })} />
         </View>
         <View style={styles.infoContainer}>
-          <FontAwesomeIcon icon={faCity} size={25}/>
+          <FontAwesomeIcon color={TEXT_COLOR} icon={faCity} size={25}/>
           <TextInput
             style={styles.input}
             value={editedUser ? editedUser.city : ''}
             placeholder='Ville'
+            placeholderTextColor={TEXT_COLOR}
             onChangeText={text => setEditedUser(prevState => {
               if (prevState === null) return null;
               return { ...prevState, city: text };
             })} />
         </View>
         <View style={styles.infoContainer}>
-          <FontAwesomeIcon icon={faMapLocation} size={25}/>
+          <FontAwesomeIcon color={TEXT_COLOR} icon={faMapLocation} size={25}/>
           <TextInput
             style={styles.input}
             value={editedUser ? editedUser.region || '' : ''}
             placeholder='Région'
+            placeholderTextColor={TEXT_COLOR}
             onChangeText={text => setEditedUser(prevState => {
               if (prevState === null) return null;
               return { ...prevState, region: text };
@@ -190,11 +196,12 @@ export default function EditProfile() {
           />
         </View>
         <View style={styles.infoContainer}>
-          <FontAwesomeIcon icon={faMapPin} size={25}/>
+          <FontAwesomeIcon color={TEXT_COLOR} icon={faMapPin} size={25}/>
           <TextInput
             style={styles.input}
             value={editedUser ? editedUser.zipCode || '' : ''}
             placeholder='Code postal'
+            placeholderTextColor={TEXT_COLOR}
             onChangeText={text => setEditedUser(prevState => {
               if (prevState === null) return null;
               return { ...prevState, zipCode: text };
@@ -217,15 +224,16 @@ export default function EditProfile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: BACKGROUND_COLOR,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: BORDER_COLOR,
+    width: '96%',
+    left: '1%',
   },
   profilePic: {
     width: 120,
@@ -241,6 +249,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: BIG_TEXT_COLOR,
   },
   scrollContainer: {
     paddingTop: 20,
@@ -249,9 +258,9 @@ const styles = StyleSheet.create({
   infoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: '10%',
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: BORDER_COLOR,
   },
   infoLabel: {
     fontWeight: 'bold',
@@ -261,6 +270,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     paddingHorizontal: 10,
+    color: TEXT_COLOR,
   },
   info: {
     fontSize: 18,
@@ -282,7 +292,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },  
   buttonText: {
-    color: '#fff',
     fontWeight: 'bold',
   },
   profilePicContainer: {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Header } from './Header';
-import { Menu } from './Menu';
+import Menu from './Menu/Menu';
 
 export const HeaderContainer = () => {
   const [menu, setMenu] = useState(false);

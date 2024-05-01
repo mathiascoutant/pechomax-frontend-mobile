@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { Catch } from '../../../interfaces/Catch';
+import { BACKGROUND_COLOR, BIG_TEXT_COLOR, TEXT_COLOR } from '../../../utils/colors';
 
 interface CatchCardProps {
   catchData: Catch;
@@ -22,12 +23,12 @@ const CatchCard: React.FC<CatchCardProps> = ({ catchData, index, totalCatches })
             <Text style={styles.fishDimension}>{catchData.length} cm,</Text>
             <Text style={styles.fishDimension}>{catchData.weight} kg</Text>
           </View>
-          <Text style={styles.catchDateAndLoc}>Pêché à {catchData.localisation ?? 'Inconnue'},</Text>
+          <Text style={styles.catchDateAndLoc}>Pêché à {catchData.localisation ?? 'Lieu non défini'},</Text>
           <Text style={styles.catchDateAndLoc}>Le {catchData.date}</Text>
         </View>
       </View>
       <View style={styles.counterContainer}>
-        <Text>{index + 1}/{totalCatches}</Text>
+        <Text style={styles.counterText}>{index + 1}/{totalCatches}</Text>
       </View>
     </View>
   );
@@ -40,18 +41,19 @@ const styles = StyleSheet.create({
         marginBottom: 10,
       },
       picture: {
-        width: 200,
-        height: 150,
-        borderRadius: 50,
+        width: '45%',
+        height: '90%',
+        borderTopRightRadius: 20,
+        borderBottomRightRadius: 20,
         margin: 10,
         left: 0,
       },
       cardContainer: {
-        width: '100%',
-        backgroundColor: '#f0f0f0',
+        backgroundColor: BACKGROUND_COLOR,
         flexDirection: 'row',
         borderRightWidth: 1,
-        borderRightColor: 'black',
+        borderRightColor: TEXT_COLOR,
+        height: '90%',
       },
       fishDescriptionContainer: {
         flex: 1,
@@ -63,6 +65,7 @@ const styles = StyleSheet.create({
       fishSpecies: {
         fontSize: 20,
         fontWeight: '600',
+        color: BIG_TEXT_COLOR,
       },
       fishDimensions: {
         flexDirection: 'row',
@@ -70,12 +73,15 @@ const styles = StyleSheet.create({
       },
       fishDimension: {
         fontWeight: 'bold',
+        color: TEXT_COLOR,
       },
       fishDescriptionText: {
         textAlign: 'justify',
+        color: TEXT_COLOR,
       },
       catchDateAndLoc: {
         fontSize: 12,
+        color: TEXT_COLOR,
       },
       counterContainer: {
         position: 'absolute',
@@ -84,6 +90,9 @@ const styles = StyleSheet.create({
         padding: 5,
         borderRadius: 100,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      counterText: {
+        color: TEXT_COLOR,
       },
 });
 

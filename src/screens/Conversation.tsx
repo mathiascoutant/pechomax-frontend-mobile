@@ -5,6 +5,8 @@ import { Conversation } from '../interfaces/Conversation';
 import { Message } from '../interfaces/Message';
 import { getConversation } from '../hooks/conversations/getConversation';
 import { getMessagesByConversationId } from '../hooks/conversations/getMessagesByConversationId';
+import { formatDate } from '../hooks/utils';
+import ConversationHeader from '../components/Conversation/ConversationHeader'
 
 const ConversationScreen = ({ route }) => {
     
@@ -36,17 +38,12 @@ const ConversationScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        {conversation && (
-          <View style={styles.conversationContainer}>
-            <Text style={styles.conversationTitle}>{conversation.title}</Text>
-            <Text style={styles.conversationDetails}>{conversation.user.username} - {conversation.createdAt}</Text>
-          </View>
-        )}
+        <ConversationHeader conversationId={id} /> 
 
         {messages.map((message) => (
           <View key={message.id} style={styles.messageContainer}>
             <Text style={styles.messageContent}>{message.content}</Text>
-            <Text style={styles.messageDetails}>{message.user.username} - {message.created_at}</Text>
+            <Text style={styles.messageDetails}>{message.user.username} - {formatDate(message.createdAt)}</Text>
           </View>
         ))}
       </ScrollView>
@@ -60,19 +57,7 @@ const styles = StyleSheet.create({
   container: {
     // paddingTop: 200,
     flex: 1,
-  },
-  conversationContainer: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  conversationTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  conversationDetails: {
-    fontSize: 14,
-    color: '#666',
+    backgroundColor: '#1A282B',
   },
   messageContainer: {
     padding: 10,

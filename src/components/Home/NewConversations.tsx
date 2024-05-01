@@ -6,6 +6,7 @@ import { formatDate } from '../../hooks/utils';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/Navigation';
 import { useNavigation } from '@react-navigation/native';
+import { BIG_TEXT_COLOR, PRIMARY_COLOR, TEXT_COLOR } from '../../utils/colors';
 
 export default function NewConversations() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -20,6 +21,7 @@ export default function NewConversations() {
     const fetchConversations = async () => {
       try {
         const fetchedConversations = await getConversations();
+        fetchedConversations.sort((a: { createdAt: Date; }, b: { createdAt: Date; }) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
         setConversations(fetchedConversations);
         setVisibleConversations(fetchedConversations.slice(0, 10));
         if (fetchedConversations.length <= 10) {
@@ -86,19 +88,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingTop: '5%',
     paddingLeft: '3%',
+    color: BIG_TEXT_COLOR,
   },
   tableContainer: {
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: TEXT_COLOR,
     borderRadius: 5,
     marginVertical: 10,
   },
   tableHeader: {
     flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: PRIMARY_COLOR,
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#000',
+    borderBottomColor: TEXT_COLOR,
   },
   headerText: {
     fontWeight: 'bold',
@@ -109,14 +112,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#000',
+    borderBottomColor: BIG_TEXT_COLOR,
   },
   rowText: {
     flex: 1,
     textAlign: 'center',
+    color: TEXT_COLOR,
   },
   seeMoreButton: {
-    backgroundColor: '#c7f9cc',
+    backgroundColor: PRIMARY_COLOR,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',

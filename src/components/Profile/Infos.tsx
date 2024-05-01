@@ -5,6 +5,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/Navigation';
 import { getSelf } from '../../hooks/users/getSelf';
 import { User } from '../../interfaces/User';
+import CustomBorderBottom from '../CustomBorderBottom';
+import { BIG_TEXT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, TEXT_COLOR } from '../../utils/colors';
 
 export default function Infos() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -46,17 +48,17 @@ export default function Infos() {
           <View style={styles.infos}>
             <View style={styles.cityInfos}>
                 {!(user?.city && user?.region && user?.zipCode) ? (
-                    <Text>Localisation non définie</Text>
+                    <Text style={styles.cityInfosText}>Localisation non définie</Text>
                 ) : (
                     <>
-                        {!!user.city && <Text>{user.city},</Text>}
-                        {!!user.region && <Text>{user.region},</Text>}
-                        {!!user.zipCode && <Text>{user.zipCode}</Text>}
+                        {!!user.city && <Text style={styles.cityInfosText}>{user.city},</Text>}
+                        {!!user.region && <Text style={styles.cityInfosText}>{user.region},</Text>}
+                        {!!user.zipCode && <Text style={styles.cityInfosText}>{user.zipCode}</Text>}
                     </>
                 )}
             </View>
-            <Text>{user ? user.email : 'Pas d\'adresse mail'}</Text>
-            <Text>{user?.phoneNumber ?? 'Pas de numéro de téléphone'}</Text>
+            <Text style={styles.cityInfosText}>{user ? user.email : 'Pas d\'adresse mail'}</Text>
+            <Text style={styles.cityInfosText}>{user?.phoneNumber ?? 'Pas de numéro de téléphone'}</Text>
           </View>
           
           <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
@@ -64,6 +66,7 @@ export default function Infos() {
           </TouchableOpacity>
         </View>
       </View>
+      <CustomBorderBottom />
     </View>
   );
 }
@@ -72,9 +75,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    padding: 20,
   },
   profilePic: {
     width: 120,
@@ -86,19 +87,24 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: BIG_TEXT_COLOR,
   },
   editButton: {
-    color: 'blue',
+    color: PRIMARY_COLOR,
     fontSize: 16,
   },
   level: {
     fontWeight: 'bold',
     marginRight: 5,
+    color: BIG_TEXT_COLOR,
   },
   cityInfos: {
     flexDirection: 'row',
     gap: 5,
     flexWrap: 'wrap',
+  },
+  cityInfosText: {
+    color: TEXT_COLOR,
   },
   infos: {
     marginBottom: 10,

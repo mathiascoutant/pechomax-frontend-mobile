@@ -1,7 +1,7 @@
 import React, { useEffect, ReactNode } from "react";
 import { View, StyleSheet } from "react-native";
 import { Header } from "./Header/Header";
-import { Menu } from "./Header/Menu";
+import { Menu } from "./Header/Menu/Menu";
 import AddButton from "./AddButton";
 
 export const Layout = () => {
