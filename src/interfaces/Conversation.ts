@@ -8,6 +8,6 @@ export interface Conversation {
     title: string;
     categoryId: string;
     category: Category;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
 }

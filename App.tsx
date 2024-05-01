@@ -6,6 +6,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { View } from 'react-native';
 import { ModalProvider } from './src/contexts/ModalContext';
 import Toast from 'react-native-toast-message';
+import { StatusBar } from 'expo-status-bar';
 
 SplashScreen.preventAutoHideAsync();
 setTimeout(SplashScreen.hideAsync, 2000);
@@ -19,6 +20,7 @@ const App = () => {
           <ModalProvider>
             <AppNavigator />
             <Toast />
+            <StatusBar style="light" />
           </ModalProvider>
         </QueryClientProvider>
       </View>

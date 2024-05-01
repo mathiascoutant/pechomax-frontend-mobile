@@ -29,7 +29,7 @@ const MenuCategories = ({ navigation }: { navigation: MenuNavigationProp }) => {
         <FontAwesomeIcon icon={faWikipediaW} size={25} color={BIG_TEXT_COLOR}/>
         <Text style={styles.titleCategory}>Wiki</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('ConversationsList')}>
         <FontAwesomeIcon icon={faBars} size={25} color={BIG_TEXT_COLOR}/>
         <Text style={styles.titleCategory}>Forums</Text>
       </TouchableOpacity>

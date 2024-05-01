@@ -20,16 +20,10 @@ const Home: React.FC = () => {
 
 const styles = StyleSheet.create({
   globalAuth: {
-    // alignItems: 'center',
   },
   container: {
     flex: 1,
     backgroundColor: BACKGROUND_COLOR,
-  },
-  logo: {
-    // width: '50%',
-    // height: '30%',
-    // marginTop: 60,
   },
 });
 

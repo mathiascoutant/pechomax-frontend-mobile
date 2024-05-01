@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Conversation } from '../../interfaces/Conversation';
 import { getConversation } from '../../hooks/conversations/getConversation';
-import { formatDate } from '../../hooks/utils';
+import { formatTimeDifference } from '../../hooks/utils';
 import { BIG_TEXT_COLOR } from '../../utils/colors';
 import CustomBorderBottom from '../CustomBorderBottom';
 
@@ -35,7 +35,7 @@ const ConversationHeader = ({ conversationId }: { conversationId: string }) => {
             <View style={styles.userWithPicture}>
               <Image style={styles.profilePic} source={{ uri: conversation.user?.profilePic}}/>
               <View>
-                <Text style={styles.conversationDetails}>{conversation.user.username} - Le {formatDate(conversation.createdAt)}</Text>
+                <Text style={styles.conversationDetails}>{conversation.user.username} - {formatTimeDifference(conversation.createdAt)}</Text>
                 <View style={styles.category}>
                   <Text style={styles.categoryText}>• {conversation.category.name}</Text>
                 </View>

@@ -12,6 +12,7 @@ import Conversation from '../screens/Conversation';
 
 import { Header } from "../components/Header/Header";
 import { HeaderContainer } from '../components/Header/HeaderContainer';
+import ConversationsList from '../screens/ConversationsList';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export type RootStackParamList = {
   Home: undefined;
   Profile: undefined;
   EditProfile: undefined;
+  ConversationsList: undefined;
   Conversation: { id: string };
 };
 
@@ -73,6 +75,14 @@ const Navigation = ({}) => {
           component={Conversation}
           options={{
             title: 'Conversation',
+            header: () => <HeaderContainer />,
+          }}
+        />
+        <Stack.Screen 
+          name="ConversationsList" 
+          component={ConversationsList}
+          options={{
+            title: 'ConversationsList',
             header: () => <HeaderContainer />,
           }}
         />

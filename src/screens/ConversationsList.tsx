@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Conversation } from '../../interfaces/Conversation'; 
-import { getConversations } from '../../hooks/conversations/getConversations';
-import { formatDate, formatTimeDifference } from '../../hooks/utils';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Conversation } from '../interfaces/Conversation'; 
+import { getConversations } from '../hooks/conversations/getConversations';
+import { formatTimeDifference } from '../hooks/utils';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../navigation/Navigation';
+import { RootStackParamList } from '../navigation/Navigation';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
-import { BIG_TEXT_COLOR, PRIMARY_COLOR, TEXT_COLOR } from '../../utils/colors';
+import { BACKGROUND_COLOR, BIG_TEXT_COLOR, PRIMARY_COLOR, TEXT_COLOR } from '../utils/colors';
+import AddButton from '../components/AddButton';
 
-export default function NewConversations() {
+export default function ConversationsList() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [visibleConversations, setVisibleConversations] = useState<Conversation[]>([]);
+  const [showMore, setShowMore] = useState<boolean>(true);
 
   const navigation = useNavigation<ProfileScreenNavigationProp>();
   const isFocused = useIsFocused();
@@ -24,6 +26,9 @@ export default function NewConversations() {
         fetchedConversations.sort((a: { createdAt: Date; }, b: { createdAt: Date; }) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
         setConversations(fetchedConversations);
         setVisibleConversations(fetchedConversations.slice(0, 10));
+        if (fetchedConversations.length <= 10) {
+          setShowMore(false);
+        }
       } catch (error) {
         console.error('Erreur lors de la récupération des conversations :', error);
       }
@@ -32,10 +37,23 @@ export default function NewConversations() {
     if (isFocused) {
       fetchConversations();
     }
+
+    return () => {
+      setShowMore(false);
+    };
   }, [isFocused]);
 
+  const handleShowMore = () => {
+    const remainingConversations = conversations.slice(visibleConversations.length);
+    const nextBatch = remainingConversations.slice(0, 10);
+    setVisibleConversations(prevState => [...prevState, ...nextBatch]);
+    if (remainingConversations.length <= 10) {
+      setShowMore(false);
+    }
+  };
+
   return (
-    <View>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Derniers posts</Text>            
       <View style={styles.container}>
         <View style={styles.tableContainer}>
@@ -54,14 +72,22 @@ export default function NewConversations() {
             </TouchableOpacity>
           ))}
         </View>
+        {showMore && (
+          <TouchableOpacity style={styles.seeMoreButton} onPress={handleShowMore}>
+            <Text>Voir plus</Text>
+          </TouchableOpacity>
+        )}
       </View>
-    </View>
+      <AddButton />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingHorizontal: '2%',
+    backgroundColor: BACKGROUND_COLOR,
   },
   title: {
     fontSize: 20,
