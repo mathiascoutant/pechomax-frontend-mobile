@@ -30,7 +30,7 @@ export default function UserConversations() {
 
   return (
     <View>
-      <Text style={styles.title}>Mes posts</Text>            
+      <Text style={styles.title}>Mes derniers posts</Text>            
       <View style={styles.container}>
         <View style={styles.tableContainer}>
           <View style={styles.tableHeader}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { formatDate, formatTimeDifference } from '../../hooks/utils';
+import { formatTimeDifference, isWithinWeek } from '../../hooks/utils';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/Navigation';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
@@ -8,35 +8,40 @@ import { BIG_TEXT_COLOR, PRIMARY_COLOR, TEXT_COLOR } from '../../utils/colors';
 import { getAllCatches } from '../../hooks/catches/getAllCatches';
 import { Catch } from '../../interfaces/Catch';
 
-export default function LastCacthes() {
+export default function BestCatchesOfTheWeek() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-  const [catches, setCatches] = useState<Catch[]>([]);
-  const [visibleCatches, setVisibleCatches] = useState<Catch[]>([]);
+  const [bestCatches, setBestCatches] = useState<Catch[]>([]);
+  const [visibleBestCatches, setVisibleBestCatches] = useState<Catch[]>([]);
 
   const navigation = useNavigation<ProfileScreenNavigationProp>();
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    const fetchCatches = async () => {
-      try {
-        const fetchedCatches = await getAllCatches();
-        fetchedCatches.sort((a: { createdAt: Date; }, b: { createdAt: Date; }) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-        setCatches(fetchedCatches);
-        setVisibleCatches(fetchedCatches.slice(0, 10));
-      } catch (error) {
-        console.error('Erreur lors de la récupération des prises :', error);
-      }
+    const fetchBestCatches = async () => {
+        try {
+            const allCatches = await getAllCatches();
+            const bestCatchesOfWeek = allCatches.filter((catchItem: Catch) => {
+                const catchDate = new Date(catchItem.date);
+                return isWithinWeek(catchDate) && catchItem.pointValue > 0;
+            });
+            bestCatchesOfWeek.sort((a: { pointValue: number; }, b: { pointValue: number; }) => b.pointValue - a.pointValue);
+            setBestCatches(bestCatchesOfWeek);
+            setVisibleBestCatches(bestCatchesOfWeek.slice(0, 10));
+        } catch (error) {
+            console.error('Erreur lors de la récupération des meilleures prises de la semaine :', error);
+        }
     };
-
+  
     if (isFocused) {
-      fetchCatches();
+      fetchBestCatches();
     }
-  }, [isFocused]);
 
+  }, [isFocused]);
+  
   return (
     <View>
-      <Text style={styles.title}>Dernières prises</Text>            
+      <Text style={styles.title}>Meilleures prises de la semaine</Text>            
       <View style={styles.container}>
         <View style={styles.tableContainer}>
           <View style={styles.tableHeader}>
@@ -46,8 +51,8 @@ export default function LastCacthes() {
             <Text style={styles.headerText}>Pêcheur</Text>
             <Text style={styles.headerText}>Pêché</Text>
           </View>
-        {visibleCatches.map((catchItem: Catch, index: number) => (
-            <TouchableOpacity key={index} style={styles.tableRow} onPress={() => navigation.navigate('catchItem', {id: catchItem.id})}>
+        {visibleBestCatches.map((catchItem: Catch, index: number) => (
+            <TouchableOpacity key={index} style={styles.tableRow} onPress={() => navigation.navigate('Conversation', {id: catchItem.id})}>
                 <Image source={{ uri: catchItem.pictures && catchItem.pictures[0] || 'https://images.rtl.fr/~c/2000v2000/rtl/www/1294273-un-poisson-clown-illustration.jpg' }} style={{ width: 50, height: 50 }} />
                 <Text style={styles.rowText}>{catchItem.species.name}</Text>
                 <View>
@@ -62,7 +67,7 @@ export default function LastCacthes() {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

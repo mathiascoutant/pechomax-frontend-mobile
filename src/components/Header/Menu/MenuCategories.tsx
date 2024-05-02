@@ -33,7 +33,7 @@ const MenuCategories = ({ navigation }: { navigation: MenuNavigationProp }) => {
         <FontAwesomeIcon icon={faBars} size={25} color={BIG_TEXT_COLOR}/>
         <Text style={styles.titleCategory}>Forums</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('UserCatchesPage')}>
         <FontAwesomeIcon icon={faFish} size={25} color={BIG_TEXT_COLOR}/>
         <Text style={styles.titleCategory}>Mes prises</Text>
       </TouchableOpacity>    

@@ -13,6 +13,7 @@ export interface Catch {
     }
     localisation: string | null;
     pictures: string[]; 
+    pointValue: number;
     description: string | null;
     date: Date;
     user: User;

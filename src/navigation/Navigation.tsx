@@ -13,6 +13,7 @@ import Conversation from '../screens/Conversation';
 import { Header } from "../components/Header/Header";
 import { HeaderContainer } from '../components/Header/HeaderContainer';
 import ConversationsList from '../screens/ConversationsList';
+import UserCatchesPage from '../screens/Catches';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ export type RootStackParamList = {
   EditProfile: undefined;
   ConversationsList: undefined;
   Conversation: { id: string };
+  UserCatchesPage: undefined;
 };
 
 const Navigation = ({}) => {
@@ -83,6 +85,14 @@ const Navigation = ({}) => {
           component={ConversationsList}
           options={{
             title: 'ConversationsList',
+            header: () => <HeaderContainer />,
+          }}
+        />
+        <Stack.Screen 
+          name="UserCatchesPage" 
+          component={UserCatchesPage}
+          options={{
+            title: 'UserCatchesPage',
             header: () => <HeaderContainer />,
           }}
         />

@@ -6,11 +6,13 @@ import NewDiscussionModal from '../components/Modals/NewDiscussionModal';
 import LastConversations from '../components/Home/LastConversations';
 import { BACKGROUND_COLOR } from '../utils/colors';
 import LastCacthes from '../components/Home/LastCatches';
+import BestCatchesOfTheWeek from '../components/Home/BestCatches';
 
 const Home: React.FC = () => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.globalAuth}>
+        <BestCatchesOfTheWeek />
         <LastCacthes />        
         <LastConversations />        
       </ScrollView>
