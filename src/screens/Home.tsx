@@ -3,17 +3,18 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'rea
 import AddButton from '../components/AddButton';
 import { getSelf } from '../hooks/users/getSelf';
 import NewDiscussionModal from '../components/Modals/NewDiscussionModal';
-import NewConversations from '../components/Home/NewConversations';
+import LastConversations from '../components/Home/LastConversations';
 import { BACKGROUND_COLOR } from '../utils/colors';
+import LastCacthes from '../components/Home/LastCatches';
 
 const Home: React.FC = () => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.globalAuth}>
-        <NewConversations />        
+        <LastCacthes />        
+        <LastConversations />        
       </ScrollView>
       <AddButton />
-      <NewDiscussionModal onCreateDiscussion={(_conversation, _message) => {}} />
     </View>
   );
 }

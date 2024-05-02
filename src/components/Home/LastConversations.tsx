@@ -8,7 +8,7 @@ import { RootStackParamList } from '../../navigation/Navigation';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { BIG_TEXT_COLOR, PRIMARY_COLOR, TEXT_COLOR } from '../../utils/colors';
 
-export default function NewConversations() {
+export default function LastConversations() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
   const [conversations, setConversations] = useState<Conversation[]>([]);

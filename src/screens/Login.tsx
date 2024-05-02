@@ -36,7 +36,7 @@ export default function Login() {
       if (response.data) {
         Toast.show({
           type: 'success',
-          text1: 'Poisson connecté !',
+          text1: 'Pêcheur connecté !',
           text2: 'Détendez-vous, ouvrez une bière et profitez de l\'application !',
         });
         navigation.navigate('Home');

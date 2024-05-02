@@ -7,6 +7,8 @@ import { View } from 'react-native';
 import { ModalProvider } from './src/contexts/ModalContext';
 import Toast from 'react-native-toast-message';
 import { StatusBar } from 'expo-status-bar';
+import NewDiscussionModal from './src/components/Modals/NewDiscussionModal';
+import NewCatchModal from './src/components/Modals/NewCatchModal';
 
 SplashScreen.preventAutoHideAsync();
 setTimeout(SplashScreen.hideAsync, 2000);
@@ -19,6 +21,8 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
           <ModalProvider>
             <AppNavigator />
+            <NewDiscussionModal onCreateDiscussion={(_conversation, _message) => {}} />
+            <NewCatchModal />
             <Toast />
             <StatusBar style="light" />
           </ModalProvider>

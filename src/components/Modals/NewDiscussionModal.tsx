@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useModal } from '../../contexts/ModalContext';
+import { useModalConversation } from '../../contexts/ModalContext';
 import { Conversation } from '../../interfaces/Conversation';
 import { Message } from '../../interfaces/Message';
 import { getCategories } from '../../hooks/categories/getCategories';
@@ -18,7 +18,7 @@ interface NewDiscussionModalProps {
 }
 
 const NewDiscussionModal: React.FC<NewDiscussionModalProps> = () => {
-  const { isModalVisible, toggleModal } = useModal();
+  const { isModalVisible, toggleModalConversation } = useModalConversation();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [categoryId, setSelectedCategoryId] = useState<string>('');
@@ -78,7 +78,7 @@ const NewDiscussionModal: React.FC<NewDiscussionModalProps> = () => {
       setContent('');
       setTitle('');
       setSelectedCategoryId('');
-      toggleModal();
+      toggleModalConversation();
       return response;
     } catch (error) {
       console.error('Erreur lors de la création de la conversation:', error);
@@ -87,7 +87,7 @@ const NewDiscussionModal: React.FC<NewDiscussionModalProps> = () => {
         text1: 'Conversation non créée !',
         text2: 'Êtes-vous sûr de bien remplir tous les champs ? 🤔'
       });
-      toggleModal();
+      toggleModalConversation();
       throw error;
     }
   };
@@ -98,11 +98,11 @@ const NewDiscussionModal: React.FC<NewDiscussionModalProps> = () => {
       animationType="fade"
       transparent={true}
       visible={isModalVisible}
-      onRequestClose={toggleModal}
+      onRequestClose={toggleModalConversation}
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
+          <TouchableOpacity style={styles.closeButton} onPress={toggleModalConversation}>
             <FontAwesomeIcon icon={faClose} size={25}/>
           </TouchableOpacity>
           <Text style={styles.modalTitle}>Nouveau Post</Text>
@@ -210,12 +210,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -10,
     right: -10,
-    backgroundColor: '#c7f9cc',
+    backgroundColor: '#B7DEE3',
     borderRadius: 50,
     padding: 5,
   },
   createButton: {
-    backgroundColor: '#c7f9cc',
+    backgroundColor: '#B7DEE3',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',

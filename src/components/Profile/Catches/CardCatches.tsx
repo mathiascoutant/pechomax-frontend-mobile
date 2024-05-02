@@ -12,10 +12,10 @@ interface CatchCardProps {
 const CatchCard: React.FC<CatchCardProps> = ({ catchData, index, totalCatches }) => {
   return (
     <View style={styles.cardContainer}>
-      <Image style={styles.picture} source={{ uri: catchData.pictures ? catchData.pictures : 'https://previews.123rf.com/images/maxstudioo/maxstudioo2302/maxstudioo230200232/199253471-poissons-dr%C3%B4les-sur-fond-gris-illustration-3d-haute-r%C3%A9solution.jpg' }} />
+      <Image style={styles.picture} source={{ uri: catchData.pictures[0] }} />
       <View style={styles.fishDescriptionContainer}>
         <View>
-          <Text style={styles.fishSpecies}>{catchData.speciesId}</Text>
+          <Text style={styles.fishSpecies}>{catchData.species.name}</Text>
           <Text style={styles.fishDescriptionText}>{catchData.description}</Text>
         </View>
         <View>
@@ -24,7 +24,7 @@ const CatchCard: React.FC<CatchCardProps> = ({ catchData, index, totalCatches })
             <Text style={styles.fishDimension}>{catchData.weight} kg</Text>
           </View>
           <Text style={styles.catchDateAndLoc}>Pêché à {catchData.localisation ?? 'Lieu non défini'},</Text>
-          <Text style={styles.catchDateAndLoc}>Le {catchData.date}</Text>
+          <Text style={styles.catchDateAndLoc}>Le {catchData.date.toString()}</Text>
         </View>
       </View>
       <View style={styles.counterContainer}>
