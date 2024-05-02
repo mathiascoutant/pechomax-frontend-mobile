@@ -10,5 +10,3 @@ export const getSelf = async () => {
     return null;
   }
 };
-
-

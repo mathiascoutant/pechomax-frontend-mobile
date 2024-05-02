@@ -76,12 +76,12 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: TEXT_COLOR,
+    backgroundColor: PRIMARY_COLOR,
   },
   headerText: {
     fontWeight: 'bold',
     flex: 1,
     textAlign: 'center',
-    color: BIG_TEXT_COLOR,
   },
   tableRow: {
     flexDirection: 'row',
