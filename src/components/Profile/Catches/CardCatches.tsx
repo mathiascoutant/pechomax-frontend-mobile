@@ -1,7 +1,10 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Catch } from '../../../interfaces/Catch';
 import { BACKGROUND_COLOR, BIG_TEXT_COLOR, TEXT_COLOR } from '../../../utils/colors';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../navigation/Navigation';
+import { useNavigation } from '@react-navigation/native';
 
 interface CatchCardProps {
   catchData: Catch;
@@ -10,8 +13,12 @@ interface CatchCardProps {
 }
 
 const CatchCard: React.FC<CatchCardProps> = ({ catchData, index, totalCatches }) => {
+  type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
+
+  
   return (
-    <View style={styles.cardContainer}>
+    <TouchableOpacity style={styles.cardContainer} onPress={() => navigation.navigate('CatchDetails', {id: catchData.id})}>
       <Image style={styles.picture} source={{ uri: catchData.pictures[0] }} />
       <View style={styles.fishDescriptionContainer}>
         <View>
@@ -30,7 +37,7 @@ const CatchCard: React.FC<CatchCardProps> = ({ catchData, index, totalCatches })
       <View style={styles.counterContainer}>
         <Text style={styles.counterText}>{index + 1}/{totalCatches}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

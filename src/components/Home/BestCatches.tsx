@@ -52,7 +52,7 @@ export default function BestCatchesOfTheWeek() {
             <Text style={styles.headerText}>Pêché</Text>
           </View>
         {visibleBestCatches.map((catchItem: Catch, index: number) => (
-            <TouchableOpacity key={index} style={styles.tableRow} onPress={() => navigation.navigate('Conversation', {id: catchItem.id})}>
+            <TouchableOpacity key={index} style={styles.tableRow} onPress={() => navigation.navigate('CatchDetails', {id: catchItem.id})}>
                 <Image source={{ uri: catchItem.pictures && catchItem.pictures[0] || 'https://images.rtl.fr/~c/2000v2000/rtl/www/1294273-un-poisson-clown-illustration.jpg' }} style={{ width: 50, height: 50 }} />
                 <Text style={styles.rowText}>{catchItem.species.name}</Text>
                 <View>

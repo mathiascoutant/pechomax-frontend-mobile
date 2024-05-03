@@ -14,6 +14,7 @@ import { Header } from "../components/Header/Header";
 import { HeaderContainer } from '../components/Header/HeaderContainer';
 import ConversationsList from '../screens/ConversationsList';
 import UserCatchesPage from '../screens/Catches';
+import CatchDetails from '../screens/CatchDetails';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ export type RootStackParamList = {
   ConversationsList: undefined;
   Conversation: { id: string };
   UserCatchesPage: undefined;
+  CatchDetails: { id: string };
 };
 
 const Navigation = ({}) => {
@@ -93,6 +95,14 @@ const Navigation = ({}) => {
           component={UserCatchesPage}
           options={{
             title: 'UserCatchesPage',
+            header: () => <HeaderContainer />,
+          }}
+        />
+        <Stack.Screen 
+          name="CatchDetails" 
+          component={CatchDetails}
+          options={{
+            title: 'CatchDetails',
             header: () => <HeaderContainer />,
           }}
         />

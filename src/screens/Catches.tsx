@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { Catch } from '../interfaces/Catch';
 import { getSelfCatches } from '../hooks/catches/getSelfCatches';
 import { formatTimeDifference } from '../hooks/utils';
+import { BACKGROUND_COLOR, BIG_TEXT_COLOR, TEXT_COLOR } from '../utils/colors';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/Navigation';
+import { useNavigation } from '@react-navigation/native';
+import AddButton from '../components/AddButton';
 
 export default function UserCatchesPage() {
+  type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
+
   const [userCatches, setUserCatches] = useState<Catch[]>([]);
 
   useEffect(() => {
@@ -27,20 +35,21 @@ export default function UserCatchesPage() {
         <FlatList
           data={userCatches}
           renderItem={({ item }) => (
-            <View style={styles.catchItem}>
+            <TouchableOpacity style={styles.catchItem} onPress={() => navigation.navigate('CatchDetails', {id: item.id})}>
               <Image source={{ uri: item.pictures && item.pictures[0] }} style={styles.catchImage} />
               <View style={styles.catchDetails}>
-                <Text style={styles.species}>{item.species.name}</Text>
-                <Text style={styles.dimensions}>{item.length} cm - {item.weight} kg</Text>
+                <Text style={[styles.species, styles.littleText]}>{item.species.name}</Text>
+                <Text style={[styles.dimensions, styles.littleText]}>{item.length} cm - {item.weight} kg</Text>
                 <Text style={styles.date}>{formatTimeDifference(item.date)}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id.toString()}
         />
       ) : (
         <Text style={styles.noCatchesMessage}>Vous n'avez pas encore enregistré de prise.</Text>
       )}
+      <AddButton />
     </View>
   );
 }
@@ -48,12 +57,18 @@ export default function UserCatchesPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingLeft: 20,
+    paddingTop: 20,
+    backgroundColor: BACKGROUND_COLOR,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: BIG_TEXT_COLOR,
+  },
+  littleText: {
+    color: TEXT_COLOR,
   },
   catchItem: {
     flexDirection: 'row',

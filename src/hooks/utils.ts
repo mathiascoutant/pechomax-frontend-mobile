@@ -7,8 +7,6 @@ export const formatDate = (date: Date): string => {
   return formattedDate;
 };
 
-
-
 export const formatTimeDifference = (createdAt: Date): string => {
   const now = new Date();
   const difference = now.getTime() - new Date(createdAt).getTime();
