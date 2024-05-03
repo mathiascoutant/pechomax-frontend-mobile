@@ -8,8 +8,6 @@ import { formatTimeDifference } from '../hooks/utils';
 import AddButton from '../components/AddButton';
 
 const CatchDetails = ({ route }) => {
-  const navigation = useNavigation();
-
   const { id } = route.params;
   const [catchDetails, setCatchDetails] = useState<Catch | null>(null);
   const [modalVisible, setModalVisible] = useState(false);

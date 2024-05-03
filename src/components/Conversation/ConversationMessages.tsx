@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Modal } from 'react-na
 import { Message } from '../../interfaces/Message';
 import { formatTimeDifference } from '../../hooks/utils';
 import { TEXT_COLOR } from '../../utils/colors';
-import CustomBorderBottom from '../CustomBorderBottom';
 
 const ConversationMessages = ({ message }: { message: Message }) => {
     const [modalVisible, setModalVisible] = useState(false);
