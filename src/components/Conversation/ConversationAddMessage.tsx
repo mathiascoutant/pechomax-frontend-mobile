@@ -57,7 +57,6 @@ const ConversationAddMessage = ({ onSubmit, conversationId }: { onSubmit: Functi
             formData.append('conversationId', conversationId);
             formData.append('content', message);
         
-            console.log('selectedImage', selectedImage);
             
             if (selectedImage) {
                 const uriParts = selectedImage.split('.');
@@ -69,8 +68,6 @@ const ConversationAddMessage = ({ onSubmit, conversationId }: { onSubmit: Functi
                 });
             }
 
-            console.log('formData', formData);
-        
             const response = await AxiosClient.post('/messages/create', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -82,8 +79,6 @@ const ConversationAddMessage = ({ onSubmit, conversationId }: { onSubmit: Functi
                 text1: 'Leurre envoyé ! 🎣',
                 text2: 'Votre message a bien été envoyé.',
             });
-        
-            console.log('Message submitted:', response.data);
         
             onSubmit(response.data);
             setMessage('');

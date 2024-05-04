@@ -98,7 +98,6 @@ const ConversationsListContainer = () => {
 
   const toggleSortOrder = () => {
     setSortBy(sortBy === 'asc' ? 'desc' : 'asc');
-    console.log('Sort by', sortBy);
   };  
 
   return (

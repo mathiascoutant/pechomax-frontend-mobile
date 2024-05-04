@@ -16,8 +16,6 @@ const CatchDetails = ({ route }) => {
   useEffect(() => {
     const fetchCatchDetails = async () => {
       try {
-        console.log('Récupération des détails de la prise avec l\'id', id);
-        
         const catchData = await getCatchById(id);
         setCatchDetails(catchData);
       } catch (error) {

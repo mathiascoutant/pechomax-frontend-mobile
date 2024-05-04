@@ -18,13 +18,11 @@ const MenuHeader = ({ user, toggleMenu }: { user: User, toggleMenu: () => void }
         catchesData.sort((a: { date: Date; }, b: { date: Date; }) => new Date(b.date).getTime() - new Date(a.date).getTime());
         const latestCatch = catchesData[0];
         setLastCatch(latestCatch);
-        console.log('Catch', latestCatch);
         
       } catch (error) {
         console.error(error);
       }
     }
-    console.log('User', user);
     fetchData();
   }, []);
   

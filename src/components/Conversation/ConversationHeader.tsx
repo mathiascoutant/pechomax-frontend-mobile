@@ -13,10 +13,8 @@ const ConversationHeader = ({ conversationId }: { conversationId: string }) => {
     const fetchConversations = async () => {
       try {
         const fetchedConversations = await getConversation(conversationId);
-        console.log('id depuis conversation screen', conversationId);
         
         setConversation(fetchedConversations);
-        console.log(fetchedConversations);
 
       } catch (error) {
         console.error('Erreur lors de la récupération des conversations :', error);

@@ -5,7 +5,6 @@ export const getConversation = async (id: string) => {
     const response = await AxiosClient.get(`/conversations/${id}`);
     return response.data;
   } catch (error) {    
-    //@ts-ignore  
     console.error(error);
     return null;
   }

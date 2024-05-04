@@ -11,15 +11,11 @@ import { User } from '../../interfaces/User';
 const ConversationsFilterComponent = ({
     categories,
     users,
-    selectedCategory,
-    selectedUser,
     setSelectedCategory,
     setSelectedUser,
 }: {
     categories: Category[];
     users: User[];
-    selectedCategory: string;
-    selectedUser: string;
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
     setSelectedUser: React.Dispatch<React.SetStateAction<string>>;
 }) => {

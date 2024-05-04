@@ -52,9 +52,6 @@ export default function EditProfile() {
             }
         });
 
-        console.log('editedUser', editedUser);
-        
-
         if (editedUser && editedUser.profilePic !== user?.profilePic) {
             const uriParts = editedUser.profilePic.split('.');
             const fileType = uriParts[uriParts.length - 1];
@@ -64,9 +61,6 @@ export default function EditProfile() {
                 type: `image/${fileType}`,
             });
         }
-
-        console.log('formData', formData);
-        
 
         await AxiosClient.put('/users/update/self', formData, {
             headers: {
@@ -85,7 +79,6 @@ export default function EditProfile() {
             text1: 'Profil non modifié',
             text2: 'Erreur lors de la modification de votre profil',
         });
-        // @ts-ignore
         console.error('Error saving edited user data:', error);
     }
 };

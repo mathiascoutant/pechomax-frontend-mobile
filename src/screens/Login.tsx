@@ -49,7 +49,6 @@ export default function Login() {
         setLoginError(true); 
       }
     } catch (error) {
-      // @ts-ignore
       console.error('Erreur lors de la connexion :', error);
       Toast.show({
         type: 'error',
@@ -158,8 +157,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   input: {
-    // padding: 10,
-    // marginBottom: 10,
     width: '100%',
   },
   inputError: {

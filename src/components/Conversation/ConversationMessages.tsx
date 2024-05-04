@@ -13,10 +13,6 @@ const ConversationMessages = ({ message }: { message: Message }) => {
         setModalVisible(true);
     };
 
-    useEffect(() => {
-        console.log('Message:', message);
-    }, [message]);
-
     return (
         <View style={styles.messageContainer}>
             <Image style={styles.profilePic} source={{ uri: message.user?.profilePic }} />

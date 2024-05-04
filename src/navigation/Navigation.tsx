@@ -16,6 +16,7 @@ import ConversationsList from '../screens/ConversationsList';
 import UserCatchesPage from '../screens/Catches';
 import CatchDetails from '../screens/CatchDetails';
 import NewLocation from '../screens/NewLocation';
+import Locations from '../screens/Locations';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ export type RootStackParamList = {
   UserCatchesPage: undefined;
   CatchDetails: { id: string };
   NewLocation: undefined;
+  Locations: undefined;
 };
 
 const Navigation = ({}) => {
@@ -113,6 +115,14 @@ const Navigation = ({}) => {
           component={NewLocation}
           options={{
             title: 'NewLocation',
+            header: () => <HeaderContainer />,
+          }}
+        />
+        <Stack.Screen 
+          name="Locations" 
+          component={Locations}
+          options={{
+            title: 'Locations',
             header: () => <HeaderContainer />,
           }}
         />

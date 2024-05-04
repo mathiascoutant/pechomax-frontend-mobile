@@ -26,7 +26,6 @@ const NewCatchModal: React.FC = () => {
       try {
         const response = await getAllSpecies();
         const data = await response;
-        console.log('GetAllSpecies', data);
         
         setAllSpecies(data);
       } catch (error) {
@@ -87,9 +86,6 @@ const NewCatchModal: React.FC = () => {
       quality: 1,
     });
 
-    console.log(result);
-    
-
     if (!result.canceled) {
       setImageUri(result.assets[0].uri); 
     }
@@ -107,9 +103,6 @@ const NewCatchModal: React.FC = () => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1,
     });
-
-    console.log(result);
-    
 
     if (!result.canceled) {
       setImageUri(result.assets[0].uri); 
@@ -192,7 +185,6 @@ const NewCatchModal: React.FC = () => {
         formData.append('description', description);
         formData.append('date', new Date().toISOString());
     
-        console.log('selectedImage', imageUri);
         if (imageUri) {
             const uriParts = imageUri.split('.');
             const fileType = uriParts[uriParts.length - 1];
@@ -203,8 +195,6 @@ const NewCatchModal: React.FC = () => {
             });
         }
 
-        console.log('formData', formData);
-    
         const response = await AxiosClient.post('/catches/create', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -225,11 +215,8 @@ const NewCatchModal: React.FC = () => {
         setImageUri('');
         toggleModalCatch();
     
-        console.log('Message submitted:', response.data);
-    
     } catch (error) {
-        // @ts-ignore
-        console.error('Error submitting message:', error.response);
+        console.error('Error submitting message:', error);
     }
 };
 
@@ -349,7 +336,6 @@ const styles = StyleSheet.create({
   },
   dropdownButtonTxtStyle: {
     flex: 1,
-    // color: TEXT_COLOR,
   },
   dropdownButtonArrowStyle: {
     marginLeft: 5,

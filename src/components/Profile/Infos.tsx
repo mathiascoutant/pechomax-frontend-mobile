@@ -18,8 +18,6 @@ export default function Infos() {
     try {
       const userData = await getSelf();
       setUser(userData);
-      console.log('photo', userData.profilePic);
-      
     } catch (error) {
       console.error(error);
     }

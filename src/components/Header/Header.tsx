@@ -57,9 +57,6 @@ const styles = StyleSheet.create({
     top: '90%',
   },
   burgerButton: {
-    // borderColor: 'white',
-    // borderWidth: 1,
-    // borderRadius: 5,
     padding: 5,
     top: '45%',
   },

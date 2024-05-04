@@ -23,7 +23,6 @@ const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch<React.
       try {
         const userData = await getSelf();
         setUser(userData);
-        console.log('OUI', userData);
       } catch (error) {
         console.error(error);
       }
@@ -41,8 +40,6 @@ const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch<React.
   const handleLogOut = async () => {
     try {
       const response = await AxiosClient.get('/auth/logout');
-      console.log(response.data);
-      console.log('User logged out');
       navigation.navigate('Home');
     } catch (error) {      
       console.error(error);

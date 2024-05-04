@@ -21,7 +21,7 @@ const MenuCategories = ({ navigation }: { navigation: MenuNavigationProp }) => {
         <FontAwesomeIcon icon={faUser} size={25} color={BIG_TEXT_COLOR}/>
         <Text style={styles.titleCategory}>Profil</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity style={styles.category} onPress={() => navigation.navigate('Locations')}>
         <FontAwesomeIcon icon={faWater} size={25} color={BIG_TEXT_COLOR}/>
         <Text style={styles.titleCategory}>Où pêcher ?</Text>
       </TouchableOpacity>
