@@ -121,6 +121,10 @@ const Locations = () => {
 
 
     const handleSubmit = async (selectedSpeciesId: string) => {
+        console.log('selectedSpeciesId', selectedSpeciesId);
+        console.log('selectedLocationId', selectedLocationId);
+        
+        
         postSpeciesLocation(selectedSpeciesId, selectedLocationId)
         setIsModalVisible(false);
     };

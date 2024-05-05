@@ -3,6 +3,10 @@ import AxiosClient from '../axios';
 
 export const postSpeciesLocation = async (speciesId: string, locationId: string) => {
     try {
+        console.log('speciesId', speciesId);
+        console.log('locationId', locationId);
+        
+        
         const response = await AxiosClient.post('/speciesLocation/create', {
             speciesId: speciesId,
             locationId: locationId
@@ -26,6 +30,7 @@ export const postSpeciesLocation = async (speciesId: string, locationId: string)
         const data = response.data;
         return data;
     } catch (error) {
+        console.error(error);
         Toast.show({
             type: 'error',
             text1: 'Erreur lors de l\'ajout de l\'espèce',
