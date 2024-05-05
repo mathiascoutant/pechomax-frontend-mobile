@@ -34,7 +34,7 @@ const MenuHeader = ({ user, toggleMenu }: { user: User, toggleMenu: () => void }
           <Image style={styles.profilePicture} source={{ uri: user?.profilePic }} />
           <View>
               <Text style={styles.name}>{user?.username}</Text>
-              <Text style={styles.name}>{user?.score}</Text>
+              <Text style={styles.name}>{user ? user.level?.title : 'Non défini'}</Text>
           </View>
         </View>
         <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>

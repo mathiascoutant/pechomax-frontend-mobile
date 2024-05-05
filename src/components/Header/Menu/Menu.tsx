@@ -9,7 +9,6 @@ import MenuCategories from './MenuCategories';
 import MenuContact from './MenuContact';
 import MenuLogOut from './MenuLogOut';
 import { BACKGROUND_COLOR } from '../../../utils/colors';
-import CustomBorderBottom from '../../CustomBorderBottom';
 import { User } from '../../../interfaces/User';
 import AxiosClient from '../../../hooks/axios';
 
@@ -47,8 +46,8 @@ const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch<React.
   };
   return (
     <View style={styles.container}>
-      <MenuHeader user={user} toggleMenu={toggleMenu} />
-      <MenuCategories navigation={navigation} />
+      {user && <MenuHeader user={user} toggleMenu={toggleMenu} />}
+      <MenuCategories navigation={navigation} setMenu={setMenu}/>
       <MenuContact />
       <MenuLogOut handleLogOut={handleLogOut} />
     </View>

@@ -18,6 +18,8 @@ export default function Infos() {
     try {
       const userData = await getSelf();
       setUser(userData);
+      console.log(userData.level);
+      
     } catch (error) {
       console.error(error);
     }

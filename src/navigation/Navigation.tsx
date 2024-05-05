@@ -10,7 +10,6 @@ import Profile from '../screens/Profile';
 import EditProfile from '../screens/EditProfile';
 import Conversation from '../screens/Conversation';
 
-import { Header } from "../components/Header/Header";
 import { HeaderContainer } from '../components/Header/HeaderContainer';
 import ConversationsList from '../screens/ConversationsList';
 import UserCatchesPage from '../screens/Catches';
