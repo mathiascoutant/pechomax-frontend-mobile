@@ -22,6 +22,8 @@ const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch<React.
       try {
         const userData = await getSelf();
         setUser(userData);
+        console.log(userData);
+        
       } catch (error) {
         console.error(error);
       }

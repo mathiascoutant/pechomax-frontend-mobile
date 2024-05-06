@@ -5,7 +5,8 @@ import AxiosClient from '../../hooks/axios';
 import Toast from 'react-native-toast-message';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faImage, faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { BACKGROUND_COLOR, TEXT_COLOR } from '../../utils/colors';
+import { BACKGROUND_COLOR, BORDER_COLOR, TEXT_COLOR } from '../../utils/colors';
+import { Input } from '@rneui/base';
 
 const ConversationAddMessage = ({ onSubmit, conversationId }: { onSubmit: Function, conversationId: string }) => {
     const [message, setMessage] = useState('');
@@ -101,18 +102,17 @@ const ConversationAddMessage = ({ onSubmit, conversationId }: { onSubmit: Functi
             )}
             <View style={styles.inputContainer}>
                 <TouchableOpacity style={styles.imageButton} onPress={openImagePicker}>
-                    <FontAwesomeIcon icon={faImage} size={20} color="#ccc" style={styles.icon}/>
+                    <FontAwesomeIcon icon={faImage} size={20} color="#ccc"/>
                 </TouchableOpacity>        
-                <TextInput
+                <Input
                     style={styles.input}
                     placeholder="Tapez votre message..."
                     placeholderTextColor={'#888'}
                     value={message}
                     onChangeText={handleChangeText}
-                    multiline={true}
                 />
                 <TouchableOpacity style={styles.sendButton} onPress={handleSubmit}>
-                    <FontAwesomeIcon icon={faPaperPlane} size={20} color="#ccc" style={styles.icon}/>
+                    <FontAwesomeIcon icon={faPaperPlane} size={20} color="#ccc"/>
                 </TouchableOpacity>
             </View>
         </View>
@@ -122,6 +122,8 @@ const ConversationAddMessage = ({ onSubmit, conversationId }: { onSubmit: Functi
 const styles = StyleSheet.create({
     container: {
         backgroundColor: BACKGROUND_COLOR,
+        borderTopColor: BORDER_COLOR,
+        borderTopWidth: 1,
     },
     selectedImageContainer: {
         position: 'relative',
@@ -144,23 +146,19 @@ const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingVertical: 15,
-        borderTopColor: '#414E51',
-        borderTopWidth: 1,
+        width: '80%',
+        left: '10%',
     },
     imageButton: {
         marginRight: 10,
+        paddingBottom: 15,
     },
     input: {
-        flex: 1,
-        color: TEXT_COLOR
+        color: TEXT_COLOR,
     },
     sendButton: {
         marginLeft: 10,
-    },
-    icon: {
-        marginRight: 10,
+        paddingBottom: 15,
     },
 });
 

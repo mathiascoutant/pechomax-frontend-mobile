@@ -10,6 +10,7 @@ import { getAllSpecies } from '../../hooks/species/getAllSpecies';
 import { TEXT_COLOR } from '../../utils/colors';
 import AxiosClient from '../../hooks/axios';
 import Toast from 'react-native-toast-message';
+import { getAllLocations } from '../../hooks/locations/getAllLocations';
 
 const NewCatchModal: React.FC = () => {
   const { isModalCatchVisible, toggleModalCatch } = useModalCatch();
@@ -20,6 +21,7 @@ const NewCatchModal: React.FC = () => {
   const [description, setDescription] = useState<string>(''); 
   const [localisation, setLocalisation] = useState<string>('');
   const [allSpecies, setAllSpecies] = useState<Species[]>([]);
+  const [allLocations, setAllLocations] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchSpecies = async () => {
@@ -33,6 +35,17 @@ const NewCatchModal: React.FC = () => {
       }
     };
 
+    const fetchLocations = async () => { 
+      try {
+        const response = await getAllLocations();
+        const data = await response;
+        setAllLocations(data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des localisations :', error);
+      }
+    };
+
+    fetchLocations();
     fetchSpecies();
   }, []);
 
@@ -112,7 +125,7 @@ const NewCatchModal: React.FC = () => {
   const renderImageForm = () => {
     return (
       <View style={styles.imageFormContainer}>
-        <Image source={{ uri: imageUri || '' }} style={styles.image} />
+        <Image source={{ uri: imageUri ?? '' }} style={styles.image} />
         <SelectDropdown
           data={allSpecies}
           onSelect={(selectedItem) => setSpecies(selectedItem.id)}
@@ -125,7 +138,7 @@ const NewCatchModal: React.FC = () => {
             return (
               <View style={styles.dropdownButtonStyle}>
                 <Text style={styles.dropdownButtonTxtStyle}>
-                  {(selectedItem && selectedItem.name) || 'Espèce du poisson'}
+                  {selectedItem?.name ?? 'Espèce du poisson'}
                 </Text>
                 <FontAwesomeIcon icon={isOpened ? faChevronUp : faChevronDown} style={styles.dropdownButtonArrowStyle} />
               </View>
@@ -160,13 +173,34 @@ const NewCatchModal: React.FC = () => {
           placeholder="Description"
           value={description}
           onChangeText={setDescription}
-          multiline
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Localisation"
-          value={localisation}
-          onChangeText={setLocalisation}
+        <SelectDropdown
+          data={allLocations}
+          onSelect={(selectedItem) => setLocalisation(selectedItem.id)}
+          search
+          searchPlaceHolder={"Localisation de la prise"}
+          renderSearchInputLeftIcon={() => {
+            return <FontAwesomeIcon icon={faSearch} color={'#72808D'} size={18} />;
+          }}
+          renderButton={(selectedItem, isOpened) => {
+            return (
+              <View style={styles.dropdownButtonStyle}>
+                <Text style={styles.dropdownButtonTxtStyle}>
+                  {selectedItem?.name || 'Localisation de la prise'}
+                </Text>
+                <FontAwesomeIcon icon={isOpened ? faChevronUp : faChevronDown} style={styles.dropdownButtonArrowStyle} />
+              </View>
+            );
+          }}
+          renderItem={(item, isSelected) => {
+            return (
+              <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
+                <Text>{item.name}</Text>
+              </View>
+            );
+          }}
+          showsVerticalScrollIndicator={true}
+          dropdownStyle={styles.dropdownMenuStyle}
         />
         <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
           <Text style={styles.buttonText}>Valider</Text>
@@ -181,13 +215,13 @@ const NewCatchModal: React.FC = () => {
         formData.append('length', length);
         formData.append('weight', weight);
         formData.append('speciesId', species);
-        formData.append('localisation', localisation);
+        formData.append('locationId', localisation);
         formData.append('description', description);
         formData.append('date', new Date().toISOString());
     
         if (imageUri) {
             const uriParts = imageUri.split('.');
-            const fileType = uriParts[uriParts.length - 1];
+            const fileType = uriParts[uriParts?.length - 1];
             formData.append('pictures', {
                 uri: imageUri,
                 name: `pictures.${fileType}`,
@@ -195,11 +229,17 @@ const NewCatchModal: React.FC = () => {
             });
         }
 
+        console.log('DATTAATATATATATA', formData);
+        
+
         const response = await AxiosClient.post('/catches/create', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
+
+        console.log(response.data);
+        
 
         Toast.show({
             type: 'success',

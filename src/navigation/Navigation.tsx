@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useEffect, useState } from 'react';
 
 import Login from '../screens/Login';
 import Register from '../screens/Register';
@@ -16,6 +15,8 @@ import UserCatchesPage from '../screens/Catches';
 import CatchDetails from '../screens/CatchDetails';
 import NewLocation from '../screens/NewLocation';
 import Locations from '../screens/Locations';
+import Wiki from '../screens/Wiki';
+import WikiArticle from '../screens/WikiArticle';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,8 @@ export type RootStackParamList = {
   CatchDetails: { id: string };
   NewLocation: undefined;
   Locations: undefined;
+  Wiki: undefined;
+  WikiArticle: { articleTitle: string };
 };
 
 const Navigation = ({}) => {
@@ -122,6 +125,22 @@ const Navigation = ({}) => {
           component={Locations}
           options={{
             title: 'Locations',
+            header: () => <HeaderContainer />,
+          }}
+        />
+         <Stack.Screen 
+          name="Wiki" 
+          component={Wiki}
+          options={{
+            title: 'Wiki',
+            header: () => <HeaderContainer />,
+          }}
+        />
+        <Stack.Screen 
+          name="WikiArticle" 
+          component={WikiArticle}
+          options={{
+            title: 'WikiArticle',
             header: () => <HeaderContainer />,
           }}
         />

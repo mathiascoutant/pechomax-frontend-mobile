@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { formatDate, formatTimeDifference } from '../../hooks/utils';
+import { formatTimeDifference } from '../../hooks/utils';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/Navigation';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
@@ -11,7 +11,6 @@ import { Catch } from '../../interfaces/Catch';
 export default function LastCacthes() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-  const [catches, setCatches] = useState<Catch[]>([]);
   const [visibleCatches, setVisibleCatches] = useState<Catch[]>([]);
 
   const navigation = useNavigation<ProfileScreenNavigationProp>();
@@ -22,7 +21,6 @@ export default function LastCacthes() {
       try {
         const fetchedCatches = await getAllCatches();
         fetchedCatches.sort((a: { createdAt: Date; }, b: { createdAt: Date; }) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-        setCatches(fetchedCatches);
         setVisibleCatches(fetchedCatches.slice(0, 10));
       } catch (error) {
         console.error('Erreur lors de la récupération des prises :', error);
@@ -46,17 +44,17 @@ export default function LastCacthes() {
             <Text style={styles.headerText}>Pêcheur</Text>
             <Text style={styles.headerText}>Pêché</Text>
           </View>
-        {visibleCatches.map((catchItem: Catch, index: number) => (
-            <TouchableOpacity key={index} style={styles.tableRow} onPress={() => navigation.navigate('catchItem', {id: catchItem.id})}>
-                <Image source={{ uri: catchItem.pictures && catchItem.pictures[0] || 'https://images.rtl.fr/~c/2000v2000/rtl/www/1294273-un-poisson-clown-illustration.jpg' }} style={{ width: 50, height: 50 }} />
-                <Text style={styles.rowText}>{catchItem.species.name}</Text>
-                <View>
-                    <Text style={styles.rowText}>{catchItem.length} cm</Text>
-                    <Text style={styles.rowText}>{catchItem.weight} kg</Text>
-                </View>
-                <Text style={styles.rowText}>{catchItem.user.username}</Text>
-                <Text style={styles.rowText}>{formatTimeDifference(catchItem.date)}</Text>
-            </TouchableOpacity>
+        {visibleCatches.map((catchItem: Catch) => (
+          <TouchableOpacity key={catchItem.id} style={styles.tableRow} onPress={() => navigation.navigate('CatchDetails', {id: catchItem.id})}>
+            <Image source={{ uri: catchItem.pictures?.[0]}} style={{ width: 50, height: 50 }} />
+            <Text style={styles.rowText}>{catchItem.species.name}</Text>
+            <View>
+              <Text style={styles.rowText}>{catchItem.length} cm</Text>
+              <Text style={styles.rowText}>{catchItem.weight} kg</Text>
+            </View>
+            <Text style={styles.rowText}>{catchItem.user.username}</Text>
+            <Text style={styles.rowText}>{formatTimeDifference(catchItem.createdAt)}</Text>
+          </TouchableOpacity>
         ))}
         </View>
       </View>

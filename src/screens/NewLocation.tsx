@@ -8,9 +8,12 @@ import { Location as CustomLocation } from '../interfaces/Location';
 
 import AxiosClient from '../hooks/axios';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
-import { PRIMARY_COLOR } from '../utils/colors';
+import { faChevronDown, faChevronUp, faClose, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { PRIMARY_COLOR, TEXT_COLOR } from '../utils/colors';
 import Toast from 'react-native-toast-message';
+import SelectDropdown from 'react-native-select-dropdown';
+import { Species } from '../interfaces/Species';
+import { getAllSpecies } from '../hooks/species/getAllSpecies';
 
 export default function NewLocationScreen() {
     const [locations, setLocations] = useState<CustomLocation[] | null>(null);
@@ -22,6 +25,23 @@ export default function NewLocationScreen() {
     const [longitude, setLongitude] = useState<string>('');
     const [latitude, setLatitude] = useState<string>('');
     const mapViewRef = useRef<MapView>(null);
+    const [allSpecies, setAllSpecies] = useState<Species[]>([]);
+    const [speciesIds, setSpeciesIds] = useState<Array<string>>([]);
+    
+    useEffect(() => {
+      const fetchSpecies = async () => {
+        try {
+          const response = await getAllSpecies();
+          const data = await response;
+          
+          setAllSpecies(data);
+        } catch (error) {
+          console.error('Erreur lors de la récupération des espèces :', error);
+        }
+      };
+
+      fetchSpecies();
+    }, []);
 
     useEffect(() => {
         const fetchLocations = async () => {
@@ -80,20 +100,27 @@ export default function NewLocationScreen() {
 
     const handleSubmit = async () => {
         try {
+            // Assurez-vous que speciesIds est bien un tableau
+            const formattedSpeciesIds = Array.isArray(speciesIds) ? speciesIds : [speciesIds];
+    
             const response = await AxiosClient.post(
-            '/locations/create',
-            JSON.stringify({
-                longitude,
-                latitude,
-                name,
-                description,
+                '/locations/create',
+                JSON.stringify({
+                    longitude,
+                    latitude,
+                    name,
+                    description,
+                    speciesIds: formattedSpeciesIds,
                 }),
                 {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                 }
-            );    
+            );
+    
+            console.log(response.data);
+            
             setModalVisible(false); 
             setAskModalVisible(false); 
             Toast.show({
@@ -101,16 +128,21 @@ export default function NewLocationScreen() {
                 text1: 'Lieu ajouté avec succès !',
                 text2: 'Votre coin de pêche a bien été ajouté à la carte.',
             });
-
+    
         } catch (error) {
             Toast.show({
                 type: 'error',
                 text1: 'Erreur lors de l\'ajout du lieu.',
                 text2: 'Veuillez réessayer plus tard.',
             });
-            console.error('Failed to create location:', error);
         }
     };
+
+    const handleModalesWithMarker = () => {
+        setModalVisible(true);
+        setAskModalVisible(false);
+    };
+    
     
     return (
         <View style={styles.container}>
@@ -127,7 +159,7 @@ export default function NewLocationScreen() {
             onPress={handleMapPress}
             ref={mapViewRef}
         >
-            {locations && locations.map(location => (
+            {locations?.map(location => (
                 <Marker
                     key={location.id}
                     coordinate={{
@@ -159,7 +191,7 @@ export default function NewLocationScreen() {
                     <TouchableOpacity style={styles.closeAskButton} onPress={() => setAskModalVisible(false)}>
                         <FontAwesomeIcon icon={faClose} size={15}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+                    <TouchableOpacity style={styles.marker} onPress={() => handleModalesWithMarker()}>
                         <Text>Ajouter le lieu</Text>
                     </TouchableOpacity>
                 </View>
@@ -187,6 +219,34 @@ export default function NewLocationScreen() {
                             placeholder="Décris-nous cet endroit !"
                             onChangeText={text => setDescription(text)}
                             multiline={true}
+                        />
+                        <SelectDropdown
+                            data={allSpecies}
+                            onSelect={(selectedItem) => setSpeciesIds(selectedItem.id)}
+                            search
+                            searchPlaceHolder={"Espèce du poisson"}
+                            renderSearchInputLeftIcon={() => {
+                                return <FontAwesomeIcon icon={faSearch} color={'#72808D'} size={18} />;
+                            }}
+                            renderButton={(selectedItem, isOpened) => {
+                                return (
+                                    <View style={styles.dropdownButtonStyle}>
+                                        <Text style={styles.dropdownButtonTxtStyle}>
+                                            {selectedItem?.name ?? 'Espèce du poisson'}
+                                        </Text>
+                                        <FontAwesomeIcon icon={isOpened ? faChevronUp : faChevronDown} style={styles.dropdownButtonArrowStyle} />
+                                    </View>
+                                );
+                            }}
+                            renderItem={(item, isSelected) => {
+                                return (
+                                <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
+                                    <Text>{item.name}</Text>
+                                </View>
+                                );
+                            }}
+                            showsVerticalScrollIndicator={true}
+                            dropdownStyle={styles.dropdownMenuStyle}
                         />
                         <TouchableOpacity style={styles.saveButton} onPress={handleSubmit}>
                             <Text style={styles.saveButtonText}>Enregistrer</Text>
@@ -263,5 +323,38 @@ const styles = StyleSheet.create({
     saveButtonText: {
         fontWeight: 'bold',
     },
+    dropdownButtonStyle: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: TEXT_COLOR,
+        alignSelf: 'center',
+        padding: 10,
+        marginBottom: 10,
+      },
+      dropdownButtonTxtStyle: {
+        flex: 1,
+      },
+      dropdownButtonArrowStyle: {
+        marginLeft: 5,
+      },
+      dropdownMenuStyle: {
+        backgroundColor: 'white',
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: TEXT_COLOR,
+      },
+      dropdownItemStyle: {
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: TEXT_COLOR,
+      },
+      marker: {
+        zIndex: 99,
+      },
 });
 

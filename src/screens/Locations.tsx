@@ -16,6 +16,7 @@ import LocationDetailsComponent from '../components/Locations/LocationDetailsCom
 import FilterComponent from '../components/Locations/FilterComponent';
 import ModalComponent from '../components/Locations/ModalComponent';
 import MapView from 'react-native-maps';
+import { updateLocation } from '../hooks/locations/updateLocation';
 
 const Locations = () => {
     const [locations, setLocations] = useState<CustomLocation[] | null>(null);
@@ -122,10 +123,19 @@ const Locations = () => {
 
     const handleSubmit = async (selectedSpeciesId: string) => {
         console.log('selectedSpeciesId', selectedSpeciesId);
-        console.log('selectedLocationId', selectedLocationId);
         
-        
-        postSpeciesLocation(selectedSpeciesId, selectedLocationId)
+        const updateData = {
+            longitude: selectedLocation?.longitude,
+            latitude: selectedLocation?.latitude,
+            name: selectedLocation?.name,
+            description: selectedLocation?.description,
+            speciesIds: [
+                ...(selectedLocation?.speciesIds || []),
+                selectedSpeciesId
+            ]
+        };
+    
+        await updateLocation(selectedLocationId, updateData);
         setIsModalVisible(false);
     };
 
@@ -156,7 +166,6 @@ const Locations = () => {
                         setIsModalVisible={setIsModalVisible}
                     />
                 )}
-
             </View>
             <AddButton />
             <ModalComponent

@@ -12,6 +12,7 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { User } from '../../interfaces/User';
 import AxiosClient from '../../hooks/axios';
 import Toast from 'react-native-toast-message';
+import { Input } from '@rneui/themed';
 
 interface NewDiscussionModalProps {
   onCreateDiscussion: (conversation: Conversation, message: Message) => void;
@@ -106,8 +107,8 @@ const NewDiscussionModal: React.FC<NewDiscussionModalProps> = () => {
             <FontAwesomeIcon icon={faClose} size={25}/>
           </TouchableOpacity>
           <Text style={styles.modalTitle}>Nouveau Post</Text>
-          <TextInput style={styles.input} placeholder="Titre du post" value={title} onChangeText={setTitle} />
-          <TextInput style={styles.input} placeholder="Premier message" multiline value={content} onChangeText={setContent} />
+          <Input style={styles.input} placeholder="Titre du post" value={title} onChangeText={setTitle} />
+          <Input style={styles.input} placeholder="Premier message" value={content} onChangeText={setContent} />
           <SelectDropdown
             data={categories}
             onSelect={(selectedItem) => {
@@ -117,7 +118,7 @@ const NewDiscussionModal: React.FC<NewDiscussionModalProps> = () => {
               return (
                 <View style={styles.dropdownButtonStyle}>
                   <Text style={styles.dropdownButtonTxtStyle}>
-                    {(selectedItem && selectedItem.name) || 'Sélectionner une catégorie'}
+                    {selectedItem?.name ?? 'Sélectionner une catégorie'}
                   </Text>
                   <Icon name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} />
                 </View>
@@ -162,11 +163,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
-    borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
     maxHeight: 100,
   },
   dropdownButtonStyle: {

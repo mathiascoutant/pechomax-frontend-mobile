@@ -25,13 +25,10 @@ const ConversationMessages = ({ message }: { message: Message }) => {
                 )}
                 <Text style={styles.messageDetails}>{message.user.username} - {formatTimeDifference(message.createdAt)}</Text>
             </View>
-            <Modal visible={modalVisible} transparent={true}>
-                <View style={styles.modalContainer}>
-                    <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
-                        <Text style={styles.closeButtonText}>Fermer</Text>
-                    </TouchableOpacity>
-                    <Image source={{ uri: selectedImage || '' }} style={styles.modalImage} />
-                </View>
+            <Modal visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(false)}>
+              <TouchableOpacity style={styles.modalContainer} onPress={() => setModalVisible(false)}>
+              </TouchableOpacity>
+              <Image source={{ uri: selectedImage || '' }} style={styles.modalImage} />
             </Modal>
         </View>
     );
@@ -63,17 +60,22 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
   },
   modalImage: {
-    width: '80%',
-    height: '80%',
+    width: '95%',
+    height: '50%',
     resizeMode: 'contain',
+    alignSelf: 'center',
+    position: 'absolute',
+    backgroundColor: 'black',
+    top: '20%',
   },
   closeButton: {
-    position: 'absolute',
+    // position: 'absolute',
     top: 20,
     right: 20,
     backgroundColor: '#fff',

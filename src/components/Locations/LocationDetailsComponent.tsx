@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 10,
         paddingHorizontal: 20,
-        marginTop: 10,
         alignItems: 'center',
+        marginBottom: 20,
     },
     addButtonLabel: {
         color: 'white',

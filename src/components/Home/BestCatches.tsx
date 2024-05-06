@@ -11,7 +11,6 @@ import { Catch } from '../../interfaces/Catch';
 export default function BestCatchesOfTheWeek() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-  const [bestCatches, setBestCatches] = useState<Catch[]>([]);
   const [visibleBestCatches, setVisibleBestCatches] = useState<Catch[]>([]);
 
   const navigation = useNavigation<ProfileScreenNavigationProp>();
@@ -26,7 +25,6 @@ export default function BestCatchesOfTheWeek() {
                 return isWithinWeek(catchDate) && catchItem.pointValue > 0;
             });
             bestCatchesOfWeek.sort((a: { pointValue: number; }, b: { pointValue: number; }) => b.pointValue - a.pointValue);
-            setBestCatches(bestCatchesOfWeek);
             setVisibleBestCatches(bestCatchesOfWeek.slice(0, 10));
         } catch (error) {
             console.error('Erreur lors de la récupération des meilleures prises de la semaine :', error);
@@ -51,17 +49,17 @@ export default function BestCatchesOfTheWeek() {
             <Text style={styles.headerText}>Pêcheur</Text>
             <Text style={styles.headerText}>Pêché</Text>
           </View>
-        {visibleBestCatches.map((catchItem: Catch, index: number) => (
-            <TouchableOpacity key={index} style={styles.tableRow} onPress={() => navigation.navigate('CatchDetails', {id: catchItem.id})}>
-                <Image source={{ uri: catchItem.pictures && catchItem.pictures[0] || 'https://images.rtl.fr/~c/2000v2000/rtl/www/1294273-un-poisson-clown-illustration.jpg' }} style={{ width: 50, height: 50 }} />
-                <Text style={styles.rowText}>{catchItem.species.name}</Text>
-                <View>
-                    <Text style={styles.rowText}>{catchItem.length} cm</Text>
-                    <Text style={styles.rowText}>{catchItem.weight} kg</Text>
-                </View>
-                <Text style={styles.rowText}>{catchItem.user.username}</Text>
-                <Text style={styles.rowText}>{formatTimeDifference(catchItem.date)}</Text>
-            </TouchableOpacity>
+        {visibleBestCatches.map((catchItem) => (
+          <TouchableOpacity key={catchItem.id} style={styles.tableRow} onPress={() => navigation.navigate('CatchDetails', {id: catchItem.id})}>
+            <Image source={{ uri: catchItem.pictures?.[0] }} style={{ width: 50, height: 50 }} />
+            <Text style={styles.rowText}>{catchItem.species.name}</Text>
+            <View>
+              <Text style={styles.rowText}>{catchItem.length} cm</Text>
+              <Text style={styles.rowText}>{catchItem.weight} kg</Text>
+            </View>
+            <Text style={styles.rowText}>{catchItem.user.username}</Text>
+            <Text style={styles.rowText}>{formatTimeDifference(catchItem.createdAt)}</Text>
+          </TouchableOpacity>
         ))}
         </View>
       </View>

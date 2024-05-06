@@ -30,7 +30,7 @@ const MenuCategories: React.FC<MenuProps> = ({ navigation, setMenu }) => {
         <FontAwesomeIcon icon={faWater} size={25} color={BIG_TEXT_COLOR}/>
         <Text style={styles.titleCategory}>Où pêcher ?</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.category} onPress={() => {navigation.navigate('Home'); setMenu(false);}}>
+      <TouchableOpacity style={styles.category} onPress={() => {navigation.navigate('Wiki'); setMenu(false);}}>
         <FontAwesomeIcon icon={faWikipediaW} size={25} color={BIG_TEXT_COLOR}/>
         <Text style={styles.titleCategory}>Wiki</Text>
       </TouchableOpacity>

@@ -17,8 +17,7 @@ const MenuHeader = ({ user, toggleMenu }: { user: User, toggleMenu: () => void }
         const catchesData = await getSelfCatches();
         catchesData.sort((a: { date: Date; }, b: { date: Date; }) => new Date(b.date).getTime() - new Date(a.date).getTime());
         const latestCatch = catchesData[0];
-        setLastCatch(latestCatch);
-        
+        setLastCatch(latestCatch);        
       } catch (error) {
         console.error(error);
       }
@@ -46,7 +45,7 @@ const MenuHeader = ({ user, toggleMenu }: { user: User, toggleMenu: () => void }
           <Text style={[styles.lastCatchText, {fontWeight: '600'}]}>Dernière prise :</Text>
           <Text style={styles.lastCatchText}>{lastCatch?.species.name}</Text>
           <Text style={styles.lastCatchText}>{lastCatch?.length} cm - {lastCatch?.weight} kg</Text>
-          <Text style={styles.lastCatchText}>{lastCatch?.localisation}</Text>
+          <Text style={styles.lastCatchText}>{lastCatch?.location.name}</Text>
           <Text style={styles.lastCatchText}>{lastCatch?.description}</Text>
         </View>
       ) : (
@@ -64,7 +63,6 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: '13%',
     justifyContent: 'space-between',
-    paddingBottom: '10%',
   },
   headerTop: {
     flexDirection: 'row',

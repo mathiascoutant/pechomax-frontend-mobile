@@ -53,7 +53,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
                         renderButton={(item, isOpened) => (
                             <View style={styles.dropdownButtonStyle}>
                                 <Text style={[styles.dropdownButtonTxtStyle, { color: '#72808D' }]}>
-                                    {(item && item.name) || 'Rechercher une espèce'}
+                                    {item?.name ?? 'Rechercher une espèce'}
                                 </Text>
                                 <FontAwesomeIcon icon={isOpened ? faChevronUp : faChevronDown} style={styles.dropdownButtonArrowStyle} />
                             </View>

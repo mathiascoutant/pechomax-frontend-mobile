@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, VirtualizedList } from 'react-native';
 import { Catch } from '../interfaces/Catch';
 import { getSelfCatches } from '../hooks/catches/getSelfCatches';
 import { formatTimeDifference } from '../hooks/utils';
@@ -28,23 +28,27 @@ export default function UserCatchesPage() {
     fetchUserCatches();
   }, []);
 
+  const renderCatchItem = ({ item }: { item: Catch }) => (
+    <TouchableOpacity style={styles.catchItem} onPress={() => navigation.navigate('CatchDetails', { id: item.id })}>
+      <Image source={{ uri: item.pictures?.[0] }} style={styles.catchImage} />
+      <View style={styles.catchDetails}>
+        <Text style={[styles.species, styles.littleText]}>{item.species.name}</Text>
+        <Text style={[styles.dimensions, styles.littleText]}>{item.length} cm - {item.weight} kg</Text>
+        <Text style={styles.date}>{formatTimeDifference(item.createdAt)}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Vos prises</Text>
       {userCatches.length > 0 ? (
-        <FlatList
+        <VirtualizedList
           data={userCatches}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.catchItem} onPress={() => navigation.navigate('CatchDetails', {id: item.id})}>
-              <Image source={{ uri: item.pictures && item.pictures[0] }} style={styles.catchImage} />
-              <View style={styles.catchDetails}>
-                <Text style={[styles.species, styles.littleText]}>{item.species.name}</Text>
-                <Text style={[styles.dimensions, styles.littleText]}>{item.length} cm - {item.weight} kg</Text>
-                <Text style={styles.date}>{formatTimeDifference(item.date)}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
+          renderItem={renderCatchItem}
           keyExtractor={(item) => item.id.toString()}
+          getItemCount={() => userCatches.length}
+          getItem={(data, index) => data[index]}
         />
       ) : (
         <Text style={styles.noCatchesMessage}>Vous n'avez pas encore enregistré de prise.</Text>
@@ -97,5 +101,6 @@ const styles = StyleSheet.create({
   noCatchesMessage: {
     fontSize: 18,
     fontStyle: 'italic',
+    color: TEXT_COLOR,
   },
 });

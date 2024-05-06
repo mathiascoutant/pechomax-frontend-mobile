@@ -1,4 +1,5 @@
 import { User } from "./User";
+import { Location } from "./Location";
 
 export interface Catch {
     id: string;
@@ -11,10 +12,12 @@ export interface Catch {
       name: string;
       pointValue: number;
     }
-    localisation: string | null;
+    locationId: string;
+    location: Location;
     pictures: string[]; 
     pointValue: number;
     description: string | null;
     date: Date;
     user: User;
+    createdAt: Date;
   }
