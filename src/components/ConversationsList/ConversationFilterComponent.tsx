@@ -5,7 +5,6 @@ import { BIG_TEXT_COLOR, TEXT_COLOR } from '../../utils/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faChevronDown, faChevronUp, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Category } from '../../interfaces/Category';
-import { Use } from 'react-native-svg';
 import { User } from '../../interfaces/User';
 
 const ConversationsFilterComponent = ({

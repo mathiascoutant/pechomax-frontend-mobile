@@ -6,7 +6,7 @@ import { RootStackParamList } from '../../navigation/Navigation';
 import { getSelf } from '../../hooks/users/getSelf';
 import { User } from '../../interfaces/User';
 import CustomBorderBottom from '../CustomBorderBottom';
-import { BIG_TEXT_COLOR, PRIMARY_COLOR, SECONDARY_COLOR, TEXT_COLOR } from '../../utils/colors';
+import { BIG_TEXT_COLOR, PRIMARY_COLOR, TEXT_COLOR } from '../../utils/colors';
 
 export default function Infos() {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -18,8 +18,6 @@ export default function Infos() {
     try {
       const userData = await getSelf();
       setUser(userData);
-      console.log(userData.level);
-      
     } catch (error) {
       console.error(error);
     }

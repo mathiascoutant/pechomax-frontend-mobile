@@ -26,9 +26,8 @@ export default function Catches() {
     };
     fetchData();
   }, []);
-  
 
-    const handleSnapToItem = (index: number) => {
+  const handleSnapToItem = (index: number) => {
     setCurrentIndex(index);
   };
 

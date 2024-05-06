@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Conversation } from '../../../interfaces/Conversation'; 
 import { getMyConversations } from '../../../hooks/conversations/getMyConversations';
-import { formatDate, formatTimeDifference } from '../../../hooks/utils';
+import { formatTimeDifference } from '../../../hooks/utils';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/Navigation';
 import { useNavigation } from '@react-navigation/native';

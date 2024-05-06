@@ -5,13 +5,14 @@ import { RootStackParamList } from '../navigation/Navigation';
 import { RouteProp } from '@react-navigation/native';
 import { BACKGROUND_COLOR, BIG_TEXT_COLOR, TEXT_COLOR } from '../utils/colors';
 import AddButton from '../components/AddButton';
+import { Article } from '../interfaces/Article';
 
-interface WikiArticleProps extends NativeStackScreenProps<RootStackParamList, 'WikiArticle'> {
-    route: RouteProp<RootStackParamList, 'WikiArticle'>;
+export interface WikiArticleProps {
+  route?: RouteProp<RootStackParamList, 'WikiArticle'> | undefined;
 }
 
-const WikiArticle: React.FC<WikiArticleProps> = ({ route }) => {
-  const { articleTitle } = route.params;
+const WikiArticle: React.FC<WikiArticleProps> = ({ route }: { route?: { params?: { articleTitle: Article } } }) => {
+  const { articleTitle } = route?.params ?? { articleTitle: {} as Article };
   const [loading, setLoading] = useState(true);
   const [articleInfo, setArticleInfo] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string | undefined>();
@@ -20,7 +21,7 @@ const WikiArticle: React.FC<WikiArticleProps> = ({ route }) => {
     const fetchArticleInfo = async () => {
       try {
         const response = await fetch(
-          `https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=extracts|pageimages&exintro&titles=${articleTitle}&pithumbsize=300`
+          `https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=extracts|pageimages&exintro&titles=${articleTitle.title}&pithumbsize=300`
         );
         const data = await response.json();
         const pageId = Object.keys(data.query.pages)[0];
@@ -40,7 +41,7 @@ const WikiArticle: React.FC<WikiArticleProps> = ({ route }) => {
   }, [articleTitle]);
 
   const openWikipediaPage = () => {
-    Linking.openURL(`https://fr.wikipedia.org/wiki/${articleTitle}`);
+    Linking.openURL(`https://fr.wikipedia.org/wiki/${articleTitle.title}`);
   };
 
   if (loading) {
@@ -55,7 +56,7 @@ const WikiArticle: React.FC<WikiArticleProps> = ({ route }) => {
     <View style={styles.container}>
       <ScrollView>
         {imageUrl && <Image source={{ uri: imageUrl }} style={styles.image} />}
-        <Text style={styles.title}>{articleTitle}</Text>
+        <Text style={styles.title}>{articleTitle.display_title}</Text>
         <Text style={styles.content}>{articleInfo}</Text>
         <Text style={styles.link} onPress={openWikipediaPage}>
           Voir sur Wikipedia

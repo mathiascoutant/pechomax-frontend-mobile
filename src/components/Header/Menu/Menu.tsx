@@ -22,8 +22,6 @@ const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch<React.
       try {
         const userData = await getSelf();
         setUser(userData);
-        console.log(userData);
-        
       } catch (error) {
         console.error(error);
       }
@@ -40,8 +38,8 @@ const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch<React.
 
   const handleLogOut = async () => {
     try {
-      const response = await AxiosClient.get('/auth/logout');
-      navigation.navigate('Home');
+      await AxiosClient.get('/auth/logout');
+      navigation.navigate('Login');
     } catch (error) {      
       console.error(error);
     }
@@ -61,10 +59,7 @@ const styles = StyleSheet.create({
     backgroundColor: BACKGROUND_COLOR,
     width: '80%',
     height: '100%',
-    top: 0,
-    bottom: 0,
     position: 'absolute',
-    zIndex: 100,
   },
 });
 

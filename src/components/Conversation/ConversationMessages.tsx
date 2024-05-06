@@ -14,23 +14,25 @@ const ConversationMessages = ({ message }: { message: Message }) => {
     };
 
     return (
-        <View style={styles.messageContainer}>
-            <Image style={styles.profilePic} source={{ uri: message.user?.profilePic }} />
-            <View style={styles.messageContentContainer}>
-                <Text style={styles.messageContent}>{message.content}</Text>
-                {message.pictures && message.pictures[0] && (
-                    <TouchableOpacity onPress={() => handleImagePress(message.pictures[0])}>
-                        <Image source={{ uri: message.pictures[0] }} style={{ width: 100, height: 100 }} />
-                    </TouchableOpacity>
-                )}
-                <Text style={styles.messageDetails}>{message.user.username} - {formatTimeDifference(message.createdAt)}</Text>
-            </View>
-            <Modal visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(false)}>
-              <TouchableOpacity style={styles.modalContainer} onPress={() => setModalVisible(false)}>
-              </TouchableOpacity>
-              <Image source={{ uri: selectedImage || '' }} style={styles.modalImage} />
-            </Modal>
+      <View style={styles.messageContainer}>
+        <Image style={styles.profilePic} source={{ uri: message.user?.profilePic }} />
+        <View style={styles.messageContentContainer}>
+            <Text style={styles.messageContent}>{message.content}</Text>
+            {message.pictures && message.pictures![0] && (
+                <TouchableOpacity onPress={() => handleImagePress(message.pictures![0])}>
+                    <Image source={{ uri: message.pictures![0] }} style={{ width: 100, height: 100 }} />
+                </TouchableOpacity>
+            )}
+            <Text style={styles.messageDetails}>{message.user.username} - {formatTimeDifference(message.createdAt)}</Text>
         </View>
+        <Modal visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(false)}>
+            <TouchableOpacity style={styles.modalContainer} onPress={() => setModalVisible(false)}>
+            </TouchableOpacity>
+            {selectedImage && (
+                <Image source={{ uri: selectedImage }} style={styles.modalImage} />
+            )}
+        </Modal>
+    </View>
     );
 };
 
@@ -75,7 +77,6 @@ const styles = StyleSheet.create({
     top: '20%',
   },
   closeButton: {
-    // position: 'absolute',
     top: 20,
     right: 20,
     backgroundColor: '#fff',

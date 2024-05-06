@@ -1,10 +1,9 @@
 import Toast from 'react-native-toast-message';
 import AxiosClient from '../axios';
+import { Location as CustomLocation } from '../../interfaces/Location';
 
-export const updateLocation = async (locationId: string, updateData: any) => {
+export const updateLocation = async (locationId: string, updateData: CustomLocation) => {
     try {
-        console.log('updateData', updateData);
-        
         const response = await AxiosClient.put(`/locations/update/${locationId}`, updateData, {
             headers: {
                 'Content-Type': 'application/json'

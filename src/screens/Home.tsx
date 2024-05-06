@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import AddButton from '../components/AddButton';
 import LastConversations from '../components/Home/LastConversations';
 import { BACKGROUND_COLOR } from '../utils/colors';

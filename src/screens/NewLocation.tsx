@@ -79,7 +79,7 @@ export default function NewLocationScreen() {
     }, []);
     
 
-    const handleMapPress = (event: any) => {
+    const handleMapPress = (event: { nativeEvent: { coordinate: { latitude: number; longitude: number; }; }; }) => {
         const { latitude, longitude } = event.nativeEvent.coordinate;
         setSelectedCoordinate({ latitude, longitude });
         setLatitude(latitude.toString());
@@ -100,7 +100,6 @@ export default function NewLocationScreen() {
 
     const handleSubmit = async () => {
         try {
-            // Assurez-vous que speciesIds est bien un tableau
             const formattedSpeciesIds = Array.isArray(speciesIds) ? speciesIds : [speciesIds];
     
             const response = await AxiosClient.post(
@@ -118,9 +117,6 @@ export default function NewLocationScreen() {
                     },
                 }
             );
-    
-            console.log(response.data);
-            
             setModalVisible(false); 
             setAskModalVisible(false); 
             Toast.show({

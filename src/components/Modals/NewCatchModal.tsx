@@ -229,17 +229,11 @@ const NewCatchModal: React.FC = () => {
             });
         }
 
-        console.log('DATTAATATATATATA', formData);
-        
-
         const response = await AxiosClient.post('/catches/create', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
-
-        console.log(response.data);
-        
 
         Toast.show({
             type: 'success',

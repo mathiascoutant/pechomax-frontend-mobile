@@ -47,19 +47,19 @@ export default function EditProfile() {
 
         const formData = new FormData();
         Object.entries(newUser).forEach(([key, value]) => {
-            if (value !== null && value !== undefined && key !== 'profilePic') {
-                formData.append(key, value);
-            }
+          if (value !== null && value !== undefined && key !== 'profilePic') {
+            formData.append(key, String(value));
+          }
         });
 
         if (editedUser && editedUser.profilePic !== user?.profilePic) {
-            const uriParts = editedUser.profilePic.split('.');
-            const fileType = uriParts[uriParts.length - 1];
-            formData.append('profilePic', {
-                uri: editedUser.profilePic,
-                name: `profilePic.${fileType}`,
-                type: `image/${fileType}`,
-            });
+          const uriParts = editedUser.profilePic.split('.');
+          const fileType = uriParts[uriParts.length - 1];
+          formData.append('profilePic', {
+            uri: editedUser.profilePic,
+            name: `profilePic.${fileType}`,
+            type: `image/${fileType}`,
+          });
         }
 
         await AxiosClient.put('/users/update/self', formData, {

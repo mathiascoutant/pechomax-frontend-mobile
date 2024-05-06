@@ -10,7 +10,6 @@ import { User } from '../interfaces/User';
 import { getSelf } from '../hooks/users/getSelf';
 import { Species } from '../interfaces/Species';
 import { getAllSpecies } from '../hooks/species/getAllSpecies';
-import { postSpeciesLocation } from '../hooks/speciesLocations/postSpeciesLocation';
 import MapComponent from '../components/Locations/MapComponent';
 import LocationDetailsComponent from '../components/Locations/LocationDetailsComponent';
 import FilterComponent from '../components/Locations/FilterComponent';
@@ -122,18 +121,23 @@ const Locations = () => {
 
 
     const handleSubmit = async (selectedSpeciesId: string) => {
-        console.log('selectedSpeciesId', selectedSpeciesId);
-        
-        const updateData = {
-            longitude: selectedLocation?.longitude,
-            latitude: selectedLocation?.latitude,
-            name: selectedLocation?.name,
-            description: selectedLocation?.description,
+        const updateData: CustomLocation = {
+            id: selectedLocation?.id || '',
+            longitude: selectedLocation?.longitude || '',
+            latitude: selectedLocation?.latitude || '',
+            userId: selectedLocation?.userId || '',
+            user: selectedLocation?.user || {} as User,
+            name: selectedLocation?.name || '',
+            speciesLocations: selectedLocation?.speciesLocations || null,
             speciesIds: [
                 ...(selectedLocation?.speciesIds || []),
                 selectedSpeciesId
-            ]
+            ],
+            description: selectedLocation?.description || '',
+            createdAt: selectedLocation?.createdAt || '',
+            updatedAt: selectedLocation?.updatedAt || ''
         };
+        
     
         await updateLocation(selectedLocationId, updateData);
         setIsModalVisible(false);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Location as CustomLocation } from '../../interfaces/Location';
 import { User } from '../../interfaces/User';
 import { PRIMARY_COLOR, TEXT_COLOR } from '../../utils/colors';

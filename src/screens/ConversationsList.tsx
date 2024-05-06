@@ -105,8 +105,6 @@ const ConversationsListContainer = () => {
       <ConversationsFilterComponent
         categories={categories}
         users={users}
-        selectedCategory={selectedCategory}
-        selectedUser={selectedUser}
         setSelectedCategory={setSelectedCategory}
         setSelectedUser={setSelectedUser}
       />

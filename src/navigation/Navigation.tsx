@@ -17,10 +17,13 @@ import NewLocation from '../screens/NewLocation';
 import Locations from '../screens/Locations';
 import Wiki from '../screens/Wiki';
 import WikiArticle from '../screens/WikiArticle';
+import LoadingScreen from '../screens/LoadingScreen';
+import { Article } from '../interfaces/Article';
 
 const Stack = createStackNavigator();
 
 export type RootStackParamList = {
+  Loading: undefined;
   Login: undefined;
   Register: undefined;
   Home: undefined;
@@ -33,13 +36,14 @@ export type RootStackParamList = {
   NewLocation: undefined;
   Locations: undefined;
   Wiki: undefined;
-  WikiArticle: { articleTitle: string };
+  WikiArticle: { articleTitle: Article };
 };
 
-const Navigation = ({}) => {
+const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName={"LoadingScreen"}>
+        <Stack.Screen name="Loading" component={LoadingScreen} options={{ headerShown: false }} />
         <Stack.Screen 
           name="Login" 
           component={Login}

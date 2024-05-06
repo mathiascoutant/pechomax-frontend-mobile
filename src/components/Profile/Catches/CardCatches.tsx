@@ -30,7 +30,7 @@ const CatchCard: React.FC<CatchCardProps> = ({ catchData, index, totalCatches })
             <Text style={styles.fishDimension}>{catchData.length} cm,</Text>
             <Text style={styles.fishDimension}>{catchData.weight} kg</Text>
           </View>
-          <Text style={styles.catchDateAndLoc}>Pêché à {catchData.localisation ?? 'Lieu non défini'},</Text>
+          <Text style={styles.catchDateAndLoc}>Pêché à {catchData.location.name ?? 'Lieu non défini'},</Text>
           <Text style={styles.catchDateAndLoc}>Le {catchData.date.toString()}</Text>
         </View>
       </View>

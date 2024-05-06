@@ -7,8 +7,8 @@ import { formatTimeDifference } from '../hooks/utils';
 import AddButton from '../components/AddButton';
 import MapView, { Marker } from 'react-native-maps';
 
-const CatchDetails = ({ route }) => {
-  const { id } = route.params;
+const CatchDetails = ({ route }: { route?: { params?: { id: string } } }) => {
+  const { id } = route?.params ?? { id: '' };
   const [catchDetails, setCatchDetails] = useState<Catch | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);

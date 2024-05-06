@@ -9,7 +9,6 @@ import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
-import { User } from '../../interfaces/User';
 import AxiosClient from '../../hooks/axios';
 import Toast from 'react-native-toast-message';
 import { Input } from '@rneui/themed';

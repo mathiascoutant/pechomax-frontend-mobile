@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, TextInput, TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import AxiosClient from '../../hooks/axios';
 import Toast from 'react-native-toast-message';
@@ -157,7 +157,6 @@ const styles = StyleSheet.create({
         color: TEXT_COLOR,
     },
     sendButton: {
-        marginLeft: 10,
         paddingBottom: 15,
     },
 });

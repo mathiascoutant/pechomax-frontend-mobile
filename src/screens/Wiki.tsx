@@ -3,42 +3,26 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/Navigation';
 import { useNavigation } from '@react-navigation/native';
-import { BACKGROUND_COLOR, TEXT_COLOR } from '../utils/colors';
+import { BACKGROUND_COLOR, BIG_TEXT_COLOR, TEXT_COLOR } from '../utils/colors';
 import AddButton from '../components/AddButton';
-
-interface Article {
-    title: string;
-}
+import { articles } from '../data/articles';
+import { Article } from '../interfaces/Article';
   
 const Wiki: React.FC<{}> = () => {
   type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
   const navigation = useNavigation<ProfileScreenNavigationProp>();
 
-  const articles: Article[] = [
-    { title: 'Saumon' },
-    { title: 'Truite_arc-en-ciel' },
-    { title: 'Pêche_sous-marine' },
-    { title: 'Appât' },
-    { title: 'Pêche_(halieutique)' },
-    { title: 'Pêcheur' },
-    { title: 'Poisson' },
-    { title: 'Crustacés' },
-    { title: 'Canne_à_pêche' },
-    { title: 'Mer' },
-    { title: 'Bateau' },
-    { title: 'Pêche_à_la_mouche' },
-  ];
-
   const renderItem = ({ item }: { item: Article }) => (
-    <TouchableOpacity onPress={() => navigation.navigate('WikiArticle', {articleTitle: item.title})}>
+    <TouchableOpacity onPress={() => navigation.navigate('WikiArticle', {articleTitle: item})}>
       <View style={styles.item}>
-        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.title}>{item.display_title}</Text>
       </View>
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
+      <Text style={styles.titleWiki}>Wiki</Text>
       <FlatList
         data={articles}
         renderItem={renderItem}
@@ -62,6 +46,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     color: TEXT_COLOR,
+  },
+  titleWiki: {
+    fontSize: 24,
+    color: BIG_TEXT_COLOR,
+    textAlign: 'center',
+    marginTop: 30,
+    marginHorizontal: 20,
+    paddingBottom: 10,
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
   },
 });
 

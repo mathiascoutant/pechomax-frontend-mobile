@@ -19,7 +19,7 @@ export const Header = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispat
 
   return (
     <View style={[styles.container, {backgroundColor: menu ? 'black' : 'white'}, {opacity: menu ? 0.7 : 1}]}>
-    <View style={styles.leftContainer}>
+      <View style={styles.leftContainer}>
         <TouchableOpacity onPress={toggleMenu} style={styles.burgerButton}>
             <FontAwesomeIcon icon={faBars} size={25} color='#bbc0c1'/>
         </TouchableOpacity>
