@@ -18,7 +18,7 @@ export default function Welcome() {
     };
 
     fetchData();
-  }, []);
+  }, [user]);
 
   return (
     <View style={styles.container}>

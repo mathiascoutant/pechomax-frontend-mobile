@@ -40,6 +40,7 @@ const Menu = ({ menu, setMenu }: { menu: boolean, setMenu: React.Dispatch<React.
     try {
       await AxiosClient.get('/auth/logout');
       navigation.navigate('Login');
+      setMenu(false);
     } catch (error) {      
       console.error(error);
     }

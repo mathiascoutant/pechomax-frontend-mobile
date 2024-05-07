@@ -5,7 +5,6 @@ export const getSelf = async () => {
     const response = await AxiosClient.get('/users/self');
     return response.data;
   } catch (error) {      
-    console.error(error);
     return null;
   }
 };
